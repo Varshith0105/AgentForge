@@ -39,65 +39,92 @@ The application uses a **React + TypeScript + Vite frontend** and a **Python Fas
 
 ## 🖼️ Application Showcase
 
-The screenshots below document key parts of the application. Images are linked from the repository's `docs/screenshots/` directory so readers can open the original file. The gallery uses the screenshot assets currently referenced in this repository.
+The screenshots below are the latest application captures stored in [`docs/Screenshots/`](docs/Screenshots/). The gallery begins with **17.png**, then **16.png**, then **15.png**, as requested; the remaining available screenshots follow.
 
-### 1. Landing page
-
-The landing page introduces AgentForge and directs users toward the workspace or account flow.
+### 1. Latest application overview — Screenshot 17
 
 <p align="center">
-  <a href="docs/screenshots/01-landing-page.png"><img src="docs/screenshots/01-landing-page.png" alt="AgentForge landing page" width="100%" /></a>
+  <a href="docs/Screenshots/17.png"><img src="docs/Screenshots/17.png" alt="AgentForge latest application overview, screenshot 17" width="100%" /></a>
 </p>
 
-### 2. Authentication
-
-The account screen provides the registration experience and a route for returning users to sign in.
+### 2. Application interface — Screenshot 16
 
 <p align="center">
-  <a href="docs/screenshots/02-login.png"><img src="docs/screenshots/02-login.png" alt="AgentForge account registration and sign-in" width="100%" /></a>
+  <a href="docs/Screenshots/16.png"><img src="docs/Screenshots/16.png" alt="AgentForge application interface, screenshot 16" width="100%" /></a>
 </p>
 
-### 3. Engineering workspace
-
-The workspace combines project navigation, the repository explorer, a central editor area, terminal panel, and AI assistant. When no file is open, the empty state guides users toward browsing files, cloning a repository, or asking the assistant a question.
+### 3. Application interface — Screenshot 15
 
 <p align="center">
-  <a href="docs/screenshots/04-project-workspace.png"><img src="docs/screenshots/04-project-workspace.png" alt="AgentForge workspace with repository explorer, editor, terminal and assistant" width="100%" /></a>
+  <a href="docs/Screenshots/15.png"><img src="docs/Screenshots/15.png" alt="AgentForge application interface, screenshot 15" width="100%" /></a>
 </p>
 
-### 4. Engineering dashboard
+### 4. More application screenshots
 
-The dashboard presents project and application-usage indicators in one view. These metrics are application-level signals and should not be interpreted as a provider invoice or a replacement for production observability.
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <a href="docs/Screenshots/14.png"><img src="docs/Screenshots/14.png" alt="AgentForge screenshot 14" width="100%" /></a><br />
+      <sub>Screenshot 14</sub>
+    </td>
+    <td align="center" width="50%">
+      <a href="docs/Screenshots/13.png"><img src="docs/Screenshots/13.png" alt="AgentForge screenshot 13" width="100%" /></a><br />
+      <sub>Screenshot 13</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="docs/Screenshots/12.png"><img src="docs/Screenshots/12.png" alt="AgentForge screenshot 12" width="100%" /></a><br />
+      <sub>Screenshot 12</sub>
+    </td>
+    <td align="center">
+      <a href="docs/Screenshots/11.png"><img src="docs/Screenshots/11.png" alt="AgentForge screenshot 11" width="100%" /></a><br />
+      <sub>Screenshot 11</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="docs/Screenshots/10.png"><img src="docs/Screenshots/10.png" alt="AgentForge screenshot 10" width="100%" /></a><br />
+      <sub>Screenshot 10</sub>
+    </td>
+    <td align="center">
+      <a href="docs/Screenshots/8.png"><img src="docs/Screenshots/8.png" alt="AgentForge screenshot 8" width="100%" /></a><br />
+      <sub>Screenshot 8</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="docs/Screenshots/6.png"><img src="docs/Screenshots/6.png" alt="AgentForge screenshot 6" width="100%" /></a><br />
+      <sub>Screenshot 6</sub>
+    </td>
+    <td align="center">
+      <a href="docs/Screenshots/5.png"><img src="docs/Screenshots/5.png" alt="AgentForge screenshot 5" width="100%" /></a><br />
+      <sub>Screenshot 5</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="docs/Screenshots/4.png"><img src="docs/Screenshots/4.png" alt="AgentForge screenshot 4" width="100%" /></a><br />
+      <sub>Screenshot 4</sub>
+    </td>
+    <td align="center">
+      <a href="docs/Screenshots/3.png"><img src="docs/Screenshots/3.png" alt="AgentForge screenshot 3" width="100%" /></a><br />
+      <sub>Screenshot 3</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="docs/Screenshots/2.png"><img src="docs/Screenshots/2.png" alt="AgentForge screenshot 2" width="100%" /></a><br />
+      <sub>Screenshot 2</sub>
+    </td>
+    <td align="center">
+      <a href="docs/Screenshots/1.png"><img src="docs/Screenshots/1.png" alt="AgentForge screenshot 1" width="100%" /></a><br />
+      <sub>Screenshot 1</sub>
+    </td>
+  </tr>
+</table>
 
-<p align="center">
-  <a href="docs/screenshots/03-dashboard.png"><img src="docs/screenshots/03-dashboard.png" alt="AgentForge engineering dashboard" width="100%" /></a>
-</p>
-
-### 5. AI provider settings
-
-The settings screen provides a place to select a provider and routing mode. A provider being listed or configured in the interface does not guarantee that credentials are valid or that the remote/local service is reachable.
-
-<p align="center">
-  <a href="docs/screenshots/10-settings-or-provider-selection.png"><img src="docs/screenshots/10-settings-or-provider-selection.png" alt="AgentForge AI provider and model settings" width="100%" /></a>
-</p>
-
-### 6. API documentation
-
-FastAPI's Swagger interface exposes endpoint groups and request schemas while the backend is running. Protected endpoints may require authentication.
-
-<p align="center">
-  <a href="docs/screenshots/11-api-documentation.png"><img src="docs/screenshots/11-api-documentation.png" alt="AgentForge Swagger API documentation" width="100%" /></a>
-</p>
-
-### 7. Responsive layout
-
-Use the responsive layout as a reference for how the public landing experience adapts to a narrower viewport.
-
-<p align="center">
-  <a href="docs/screenshots/12-mobile-layout.png"><img src="docs/screenshots/12-mobile-layout.png" alt="AgentForge responsive mobile layout" width="100%" /></a>
-</p>
-
-> **Screenshot maintenance:** Update screenshot files and their captions together when the interface changes. Before committing screenshots, remove passwords, access tokens, API keys, personal data, and private repository details. See the repository's `docs/screenshots/` directory for the current image assets.
+> **Screenshot maintenance:** Keep image filenames and the README paths in sync. Before committing screenshots, remove passwords, access tokens, API keys, personal data, and private repository details. The gallery references the currently available files in `docs/Screenshots/` (including the missing sequence numbers as-is).
 
 ## ✨ Features
 
