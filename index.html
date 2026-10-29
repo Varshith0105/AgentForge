@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentForge — Autonomous AI Software Engineering Agent</title>
+  <meta name="description" content="AgentForge is a premium, futuristic AI-powered Software Engineering Assistant that automates analysis, debugging, testing, documentation, and optimization.">
+  
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="frontend/assets/css/variables.css">
+  <link rel="stylesheet" href="frontend/assets/css/base.css">
+  <link rel="stylesheet" href="frontend/assets/css/animations.css">
+  <link rel="stylesheet" href="frontend/assets/css/components.css">
+  <link rel="stylesheet" href="frontend/assets/css/landing.css">
+</head>
+<body>
+
+  <!-- Particle Background Canvas -->
+  <canvas id="particlesCanvas"></canvas>
+
+  <!-- Navigation Bar -->
+  <nav class="landing-nav animate-fade-in-down">
+    <div class="container flex justify-between items-center h-full">
+      <a href="#" class="nav-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">AgentForge</span>
+      </a>
+      
+      <button class="nav-mobile-toggle" id="mobileMenuBtn" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <ul class="nav-links flex items-center gap-8" id="navLinks">
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#how-it-works" class="nav-link">Workflow</a></li>
+        <li><a href="#stats" class="nav-link">Statistics</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+        <li><a href="frontend/pages/login.html" class="btn btn-secondary btn-sm">Sign In</a></li>
+        <li><a href="frontend/pages/register.html" class="btn btn-primary btn-sm">Get Started</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section flex items-center justify-center">
+    <div class="container grid grid-2 items-center gap-12">
+      <div class="hero-content animate-fade-in-left">
+        <div class="badge badge-purple mb-4 animate-pulse"><i class="fa-solid fa-wand-magic-sparkles"></i> Next-Gen Autonomous Developer Assistant</div>
+        <h1 class="mb-4">
+          Your Autonomous <br>
+          <span class="gradient-text">Software Engineering</span> <br>
+          Co-Pilot
+        </h1>
+        <p class="mb-8 text-lg">
+          AgentForge automates repository scanning, bug resolution, test generation, security reviews, and documentation using collaborating AI agents. Bring Jarvis-like intelligence to your codebase today.
+        </p>
+        <div class="flex gap-4 flex-wrap">
+          <a href="frontend/pages/register.html" class="btn btn-primary btn-lg hover-glow ripple-container" onclick="Utils.addRipple(event)">
+            Start Analyzing <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#how-it-works" class="btn btn-ghost btn-lg hover-lift">
+            How It Works
+          </a>
+        </div>
+      </div>
+      <div class="hero-illustration animate-fade-in-right">
+        <div class="illustration-container">
+          <div class="floating-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+          </div>
+          <!-- Futuristic Interactive AI Brain SVG -->
+          <svg viewBox="0 0 400 400" width="100%" height="100%" class="ai-brain-svg">
+            <defs>
+              <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.3"></stop>
+                <stop offset="100%" stop-color="#00d4ff" stop-opacity="0"></stop>
+              </radialGradient>
+              <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00d4ff"></stop>
+                <stop offset="100%" stop-color="#7c3aed"></stop>
+              </linearGradient>
+            </defs>
+            <circle cx="200" cy="200" r="100" fill="url(#glowGrad)"></circle>
+            <!-- Outer Ring -->
+            <circle cx="200" cy="200" r="120" stroke="rgba(0, 212, 255, 0.15)" stroke-width="2" fill="none" stroke-dasharray="10 5" class="animate-spin-slow"></circle>
+            <!-- Middle Ring -->
+            <circle cx="200" cy="200" r="80" stroke="rgba(124, 58, 237, 0.2)" stroke-width="1.5" fill="none" stroke-dasharray="5 15" style="animation: spin 15s linear infinite reverse;"></circle>
+            <!-- Nodes & Connections -->
+            <g class="brain-nodes">
+              <!-- Center -->
+              <circle cx="200" cy="200" r="8" fill="#00d4ff" class="node-pulse"></circle>
+              <!-- Surrounding Nodes -->
+              <line x1="200" y1="200" x2="140" y2="140" stroke="url(#lineGrad)" stroke-width="1.5" stroke-dasharray="100" stroke-dashoffset="100" class="draw-line delay-1"></line>
+              <line x1="200" y1="200" x2="260" y2="140" stroke="url(#lineGrad)" stroke-width="1.5" stroke-dasharray="100" stroke-dashoffset="100" class="draw-line delay-2"></line>
+              <line x1="200" y1="200" x2="130" y2="250" stroke="url(#lineGrad)" stroke-width="1.5" stroke-dasharray="100" stroke-dashoffset="100" class="draw-line delay-3"></line>
+              <line x1="200" y1="200" x2="270" y2="250" stroke="url(#lineGrad)" stroke-width="1.5" stroke-dasharray="100" stroke-dashoffset="100" class="draw-line delay-4"></line>
+              <line x1="200" y1="200" x2="200" y2="90" stroke="url(#lineGrad)" stroke-width="1.5" stroke-dasharray="100" stroke-dashoffset="100" class="draw-line delay-5"></line>
+              <line x1="200" y1="200" x2="200" y2="310" stroke="url(#lineGrad)" stroke-width="1.5" stroke-dasharray="100" stroke-dashoffset="100" class="draw-line delay-6"></line>
+
+              <!-- Node Circles -->
+              <circle cx="140" cy="140" r="6" fill="#7c3aed" class="brain-node"></circle>
+              <circle cx="260" cy="140" r="6" fill="#00d4ff" class="brain-node"></circle>
+              <circle cx="130" cy="250" r="6" fill="#ec4899" class="brain-node"></circle>
+              <circle cx="270" cy="250" r="6" fill="#10b981" class="brain-node"></circle>
+              <circle cx="200" cy="90" r="6" fill="#7c3aed" class="brain-node"></circle>
+              <circle cx="200" cy="310" r="6" fill="#00d4ff" class="brain-node"></circle>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <div class="badge badge-blue mb-2">Our Capabilities</div>
+        <h2>Engineered for <span class="gradient-text-accent">Visual & Operational</span> Excellence</h2>
+        <p class="text-secondary max-content-width mt-4" style="max-width: 600px; margin: 0 auto;">
+          An array of intelligent software engineering agents working side-by-side to review, secure, and document your projects.
+        </p>
+      </div>
+
+      <div class="grid grid-auto-fit reveal">
+        <!-- Card 1: Repo Analysis -->
+        <div class="glass-card gradient-border hover-lift">
+          <div class="feature-icon-wrapper blue"><i class="fa-solid fa-code-branch"></i></div>
+          <h3 class="mb-2 mt-4 text-lg">Repository Analysis</h3>
+          <p class="text-sm">Perform deep codebase intelligence, extracting dependency trees, complexity statistics, and stacks.</p>
+        </div>
+
+        <!-- Card 2: AI Chat -->
+        <div class="glass-card gradient-border hover-lift">
+          <div class="feature-icon-wrapper purple"><i class="fa-solid fa-robot"></i></div>
+          <h3 class="mb-2 mt-4 text-lg">AI Chat</h3>
+          <p class="text-sm">Speak directly with your repository, search syntax highlighted files, and get detailed code reviews.</p>
+        </div>
+
+        <!-- Card 3: Bug Detection -->
+        <div class="glass-card gradient-border hover-lift">
+          <div class="feature-icon-wrapper red"><i class="fa-solid fa-bug"></i></div>
+          <h3 class="mb-2 mt-4 text-lg">Bug Detection</h3>
+          <p class="text-sm">Identify bugs, syntax anomalies, logical defects, and get interactive refactored patches.</p>
+        </div>
+
+        <!-- Card 4: Test Generator -->
+        <div class="glass-card gradient-border hover-lift">
+          <div class="feature-icon-wrapper green"><i class="fa-solid fa-vial"></i></div>
+          <h3 class="mb-2 mt-4 text-lg">Test Generator</h3>
+          <p class="text-sm">Instantly output comprehensive unit tests using PyTest, Jest, and JUnit frameworks.</p>
+        </div>
+
+        <!-- Card 5: Documentation -->
+        <div class="glass-card gradient-border hover-lift">
+          <div class="feature-icon-wrapper pink"><i class="fa-solid fa-file-lines"></i></div>
+          <h3 class="mb-2 mt-4 text-lg">Documentation</h3>
+          <p class="text-sm">Create functional READMEs, deployment configurations, and detailed API documentation.</p>
+        </div>
+
+        <!-- Card 6: Architecture Generator -->
+        <div class="glass-card gradient-border hover-lift">
+          <div class="feature-icon-wrapper blue"><i class="fa-solid fa-diagram-project"></i></div>
+          <h3 class="mb-2 mt-4 text-lg">Architecture Generator</h3>
+          <p class="text-sm">Draft components, database schemas, systems flow, and API endpoints as beautiful SVGs.</p>
+        </div>
+
+        <!-- Card 7: Security Review -->
+        <div class="glass-card gradient-border hover-lift">
+          <div class="feature-icon-wrapper purple"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3 class="mb-2 mt-4 text-lg">Security Review</h3>
+          <p class="text-sm">Identify SQL Injections, Cross-Site Scripting, hardcoded keys, and outdated dependencies.</p>
+        </div>
+
+        <!-- Card 8: Performance Optimization -->
+        <div class="glass-card gradient-border hover-lift">
+          <div class="feature-icon-wrapper orange"><i class="fa-solid fa-gauge-high"></i></div>
+          <h3 class="mb-2 mt-4 text-lg">Performance Optimizer</h3>
+          <p class="text-sm">Pinpoint nested cycles, duplicate definitions, dead blocks, and memory leaks.</p>
+        </div>
+
+        <!-- Card 9: Code Explanation -->
+        <div class="glass-card gradient-border hover-lift">
+          <div class="feature-icon-wrapper green"><i class="fa-solid fa-lightbulb"></i></div>
+          <h3 class="mb-2 mt-4 text-lg">Code Explanation</h3>
+          <p class="text-sm">Extract logical blocks, space-time complexities, algorithms, and review best practices.</p>
+        </div>
+
+        <!-- Card 10: Pull Request Review -->
+        <div class="glass-card gradient-border hover-lift">
+          <div class="feature-icon-wrapper pink"><i class="fa-solid fa-code-pull-request"></i></div>
+          <h3 class="mb-2 mt-4 text-lg">Pull Request Review</h3>
+          <p class="text-sm">Obtain automated reviews, impact warnings, and visual quality metrics for your branches.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <div class="badge badge-purple mb-2">Automated Execution</div>
+        <h2>Agent Orchestration Workflow</h2>
+        <p class="text-secondary max-content-width mt-4" style="max-width: 600px; margin: 0 auto;">
+          See how our multi-agent framework works in sequential synchronicity.
+        </p>
+      </div>
+
+      <div class="workflow-timeline flex justify-between gap-6 flex-wrap reveal">
+        <div class="workflow-step glass-card">
+          <div class="step-num">01</div>
+          <div class="step-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+          <h4 class="mt-4 mb-2">Ingestion</h4>
+          <p class="text-sm">Provide your GitHub Repository URL or upload zip file files.</p>
+        </div>
+        <div class="workflow-step glass-card">
+          <div class="step-num">02</div>
+          <div class="step-icon"><i class="fa-solid fa-sitemap"></i></div>
+          <h4 class="mt-4 mb-2">Planner Agent</h4>
+          <p class="text-sm">Orchestrates analysis pipelines, ordering specialized workers.</p>
+        </div>
+        <div class="workflow-step glass-card">
+          <div class="step-num">03</div>
+          <div class="step-icon"><i class="fa-solid fa-arrows-spin"></i></div>
+          <h4 class="mt-4 mb-2">Collaborative Tasks</h4>
+          <p class="text-sm">Analysis, bug checks, tests, security scans execute in sequence.</p>
+        </div>
+        <div class="workflow-step glass-card">
+          <div class="step-num">04</div>
+          <div class="step-icon"><i class="fa-solid fa-file-export"></i></div>
+          <h4 class="mt-4 mb-2">Dashboard Report</h4>
+          <p class="text-sm">Access visual metrics, code reviews, and fully generated files.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Section -->
+  <section class="section stats-section" id="stats">
+    <div class="container grid grid-4 text-center items-center">
+      <div class="stat-item reveal">
+        <div class="stat-icon-large blue"><i class="fa-solid fa-folder-open"></i></div>
+        <h3 class="stat-number" data-target="50000">0</h3>
+        <p class="text-sm text-muted mt-2">Projects Analyzed</p>
+      </div>
+      <div class="stat-item reveal delay-1">
+        <div class="stat-icon-large purple"><i class="fa-solid fa-bug"></i></div>
+        <h3 class="stat-number" data-target="200000">0</h3>
+        <p class="text-sm text-muted mt-2">Bugs Resolved</p>
+      </div>
+      <div class="stat-item reveal delay-2">
+        <div class="stat-icon-large green"><i class="fa-solid fa-vial"></i></div>
+        <h3 class="stat-number" data-target="1000000">0</h3>
+        <p class="text-sm text-muted mt-2">Tests Generated</p>
+      </div>
+      <div class="stat-item reveal delay-3">
+        <div class="stat-icon-large pink"><i class="fa-solid fa-users"></i></div>
+        <h3 class="stat-number" data-target="10000">0</h3>
+        <p class="text-sm text-muted mt-2">Active Developers</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <div class="badge badge-blue mb-2">Developer Feedback</div>
+        <h2>What Builders are Saying</h2>
+      </div>
+
+      <div class="testimonials-container reveal">
+        <div class="testimonial-carousel" id="testimonialCarousel">
+          <div class="testimonial-slide active">
+            <div class="stars mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="testimonial-text mb-6">"AgentForge refactored our legacy authentication pipelines, resolved 3 security warnings, and generated PyTest modules in minutes. Unbelievable tool!"</p>
+            <div class="flex items-center gap-3">
+              <div class="testimonial-avatar">JD</div>
+              <div>
+                <h4 class="text-sm">John Doe</h4>
+                <p class="text-xs text-muted">Lead Architect, Fintech Solutions</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="stars mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+            <p class="testimonial-text mb-6">"The architecture generator output clean component relationship graphs in SVG format. Saved me hours of manual diagram work."</p>
+            <div class="flex items-center gap-3">
+              <div class="testimonial-avatar">SK</div>
+              <div>
+                <h4 class="text-sm">Sarah Jenkins</h4>
+                <p class="text-xs text-muted">DevOps Specialist, SaaS Global</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-dots mt-8 flex justify-center gap-2" id="carouselDots">
+          <span class="dot active" data-slide="0"></span>
+          <span class="dot" data-slide="1"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <div class="badge badge-purple mb-2">FAQ</div>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+
+      <div class="accordion max-content-width reveal" style="max-width: 800px; margin: 0 auto;">
+        <div class="accordion-item active">
+          <button class="accordion-header">
+            What is AgentForge?
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-content">
+            <p>AgentForge is an autonomous AI-driven software development assistant that handles tasks like repository scanning, test suite writing, bug identification, and performance analysis.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Which programming languages are supported?
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-content">
+            <p>We support Python, JavaScript, TypeScript, Java, C++, Go, and Rust natively, including various framework combinations.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Is my code secure?
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-content">
+            <p>Absolutely. AgentForge complies with standard cryptographic and privacy models, and supports secure on-premise execution models such as Ollama.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section">
+    <div class="container grid grid-4">
+      <div>
+        <a href="#" class="nav-logo mb-4">
+          <span class="logo-icon">⚡</span>
+          <span class="logo-text">AgentForge</span>
+        </a>
+        <p class="text-xs text-muted mb-4">Autonomous AI Software Engineering Agent built for visual elegance and developer efficiency.</p>
+        <div class="flex gap-4">
+          <a href="#" class="text-muted"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="text-muted"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="text-muted"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-sm mb-4">Product</h4>
+        <ul class="flex flex-col gap-2 list-none" style="padding-left:0;">
+          <li><a href="#" class="text-xs text-muted">Pricing</a></li>
+          <li><a href="#" class="text-xs text-muted">Feature Tour</a></li>
+          <li><a href="#" class="text-xs text-muted">API Docs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-sm mb-4">Company</h4>
+        <ul class="flex flex-col gap-2 list-none" style="padding-left:0;">
+          <li><a href="#" class="text-xs text-muted">About Us</a></li>
+          <li><a href="#" class="text-xs text-muted">Careers</a></li>
+          <li><a href="#" class="text-xs text-muted">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-sm mb-4">Stay Updated</h4>
+        <div class="flex flex-col gap-2">
+          <input type="email" class="input-field text-sm" placeholder="Your email address" style="margin-bottom:0.5rem;">
+          <button class="btn btn-primary btn-sm">Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <div class="container divider"><span class="text-xs">&copy; 2026 AgentForge Inc. All Rights Reserved.</span></div>
+  </footer>
+
+  <script src="frontend/assets/js/utils.js"></script>
+  <script>
+    // Inline Particle System
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('particlesCanvas');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      const particleCount = 60;
+      
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      
+      window.addEventListener('resize', resize);
+      resize();
+      
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.vx = (Math.random() - 0.5) * 1.5;
+          this.vy = (Math.random() - 0.5) * 1.5;
+          this.size = Math.random() * 2 + 1;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          
+          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(124, 58, 237, 0.3)';
+          ctx.fill();
+        }
+      }
+      
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+      
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        
+        // Draw lines between nearby particles
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            
+            if (dist < 150) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(0, 212, 255, ${0.15 - dist/1000})`;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+      
+      animate();
+    });
+
+    // Inline Landing Interactions
+    document.addEventListener('DOMContentLoaded', () => {
+      // Mobile menu
+      const mobileBtn = document.getElementById('mobileMenuBtn');
+      const navLinks = document.getElementById('navLinks');
+      if (mobileBtn && navLinks) {
+        mobileBtn.addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+        });
+      }
+
+      // Utils.js interactions
+      if (typeof Utils !== 'undefined') {
+        // Initialize Scroll Reveal
+        Utils.initScrollReveal();
+
+        // Initialize Accordion
+        Utils.initAccordion(document.querySelector('.accordion'));
+
+        // Animated Counters
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const el = entry.target;
+              const target = parseInt(el.dataset.target, 10);
+              const prefix = el.dataset.prefix || '';
+              const suffix = el.dataset.suffix || '+';
+              Utils.animateCounter(el, target, 2000, prefix, suffix);
+              observer.unobserve(el);
+            }
+          });
+        });
+        document.querySelectorAll('.stat-number').forEach(el => observer.observe(el));
+      }
+
+      // Testimonial Carousel
+      const dots = document.querySelectorAll('.carousel-dots .dot');
+      const slides = document.querySelectorAll('.testimonial-slide');
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          dots.forEach(d => d.classList.remove('active'));
+          slides.forEach(s => s.classList.remove('active'));
+          dot.classList.add('active');
+          if (slides[index]) slides[index].classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
