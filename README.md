@@ -38,11 +38,11 @@ It is built with a **React + TypeScript + Vite frontend** and a **FastAPI backen
 
 ## 🖼️ Screenshots
 
-These screenshots show how AgentForge looks when the application is running locally. Each image keeps its **original aspect ratio**—no forced stretching or unnecessary cropping.
+The gallery below documents the application UI. Images are linked to their full-size repository assets so a reader can open each screenshot to inspect details. Images are not forced into a fixed height, which avoids stretching UI text or hiding controls.
 
 ### 1. Landing page
 
-> **Figure 1 — Landing page:** The AgentForge entry screen introduces the local-first AI software engineering workspace.
+The public entry screen introduces AgentForge and offers clear routes into the workspace and account flow.
 
 <p align="center">
   <a href="docs/screenshots/01-landing-page.png"><img src="docs/screenshots/01-landing-page.png" alt="AgentForge landing page" width="100%" /></a>
@@ -50,7 +50,7 @@ These screenshots show how AgentForge looks when the application is running loca
 
 ### 2. Sign in
 
-> **Figure 2 — Sign-in screen:** The authentication screen used to access the workspace.
+The authentication screen is the entry point for returning users.
 
 <p align="center">
   <a href="docs/screenshots/02-login.png"><img src="docs/screenshots/02-login.png" alt="AgentForge sign-in screen" width="100%" /></a>
@@ -58,31 +58,31 @@ These screenshots show how AgentForge looks when the application is running loca
 
 ### 3. Workspace dashboard
 
-> **Figure 3 — Workspace dashboard:** The main workspace view with project navigation and developer tools.
+The main workspace provides the primary navigation and the coding workspace layout.
 
 <p align="center">
   <a href="docs/screenshots/03-dashboard.png"><img src="docs/screenshots/03-dashboard.png" alt="AgentForge workspace dashboard" width="100%" /></a>
 </p>
 
-### 4. Dashboard detail
+### 4. Engineering dashboard detail
 
-> **Figure 4 — Dashboard detail:** A closer look at the dashboard and its project and usage summaries.
+The dashboard summarizes project activity and platform usage in a single view.
 
 <p align="center">
-  <a href="docs/screenshots/04-dashboard-detail.png"><img src="docs/screenshots/04-dashboard-detail.png" alt="AgentForge dashboard detail" width="100%" /></a>
+  <a href="docs/screenshots/04-dashboard-detail.png"><img src="docs/screenshots/04-dashboard-detail.png" alt="AgentForge engineering dashboard detail" width="100%" /></a>
 </p>
 
 ### 5. Project workspace
 
-> **Figure 5 — Project workspace:** The coding workspace with project explorer and AI assistant panel.
+The workspace brings the repository explorer, editor area, terminal panel and AI assistant together.
 
 <p align="center">
-  <a href="docs/screenshots/04-project-workspace.png"><img src="docs/screenshots/04-project-workspace.png" alt="AgentForge project workspace" width="100%" /></a>
+  <a href="docs/screenshots/04-project-workspace.png"><img src="docs/screenshots/04-project-workspace.png" alt="AgentForge project workspace with explorer and AI assistant" width="100%" /></a>
 </p>
 
 ### 6. AI provider settings
 
-> **Figure 6 — AI provider settings:** The settings screen for choosing and configuring a model provider.
+Provider settings show where local or cloud model routing is selected and configured. Provider availability depends on the corresponding local service or credentials.
 
 <p align="center">
   <a href="docs/screenshots/10-settings-or-provider-selection.png"><img src="docs/screenshots/10-settings-or-provider-selection.png" alt="AgentForge AI provider settings" width="100%" /></a>
@@ -90,19 +90,52 @@ These screenshots show how AgentForge looks when the application is running loca
 
 ### 7. API documentation
 
-> **Figure 7 — API documentation:** The FastAPI Swagger UI for exploring available endpoints and trying requests. The image is kept at its natural proportions so the endpoint details remain visible; open it to inspect the full-size screenshot.
+The Swagger UI documents the backend API and allows developers to inspect endpoints and try requests against their local server. Open the image itself to inspect endpoint names at full size.
 
 <p align="center">
-  <a href="docs/screenshots/11-api-documentation.png"><img src="docs/screenshots/11-api-documentation.png" alt="AgentForge FastAPI Swagger UI documentation" width="100%" /></a>
+  <a href="docs/screenshots/11-api-documentation.png"><img src="docs/screenshots/11-api-documentation.png" alt="AgentForge FastAPI Swagger UI" width="100%" /></a>
 </p>
 
 ### 8. Mobile layout
 
-> **Figure 8 — Mobile layout:** A view of the AgentForge landing page at a narrow viewport.
+The responsive landing page at a narrow viewport.
 
 <p align="center">
-  <a href="docs/screenshots/12-mobile-layout.png"><img src="docs/screenshots/12-mobile-layout.png" alt="AgentForge mobile landing layout" width="100%" /></a>
+  <a href="docs/screenshots/12-mobile-layout.png"><img src="docs/screenshots/12-mobile-layout.png" alt="AgentForge responsive mobile landing page" width="100%" /></a>
 </p>
+
+> **Screenshot note:** These image paths must exist in the repository for GitHub to render them. To keep the README accurate, capture screenshots from the running app and replace the corresponding files in `docs/screenshots/` when the UI changes. Avoid adding browser chrome, unrelated desktop areas, credentials, or personal information to screenshots.
+
+## 🧩 Feature guide
+
+### Workspace and repository explorer
+Use the workspace to open or clone a supported repository, inspect its file tree, and select files for review. Repository operations depend on the configured workspace root, Git installation, and the permissions of the running backend process. Start with a non-sensitive test repository before pointing the application at real projects.
+
+### Engineering dashboard
+The dashboard is intended to summarize project activity and application-level usage. Treat displayed counts as application telemetry, not as a substitute for production monitoring or provider billing statements.
+
+### Multi-agent workflows
+The Agents area exposes specialized engineering roles, such as planning, repository understanding, security review, architecture, performance and test generation. A visible agent card or dispatch dialog confirms the UI is available; successful execution still depends on a configured provider, reachable model, supported task implementation and backend health.
+
+### AI chat and model routing
+AgentForge provides a common interface for selecting a provider/model and sending code-related questions. Local Ollama models can keep inference on the developer's machine, while cloud providers require their own credentials and network access. A provider listed in settings should not be interpreted as proof that its credentials are valid or that every model is available.
+
+### Monitoring and repository memory
+Monitoring screens expose application-level request, token, latency, error and resource indicators where the backend provides data. Knowledge graph and memory screens present repository indexing or stored context when available. Empty or sample values may occur before a repository is opened or indexing has completed.
+
+### API documentation
+When the backend is running, FastAPI's Swagger UI is available at `http://localhost:8000/docs`. Use it to review request schemas and endpoint responses. Protected endpoints may require authentication, and the API surface can change during active development.
+
+## 🔄 Typical developer workflow
+
+1. Start the backend and frontend in separate terminals.
+2. Create an account or sign in using the local authentication flow.
+3. Open or clone a repository that does not contain secrets or sensitive data.
+4. Inspect the file tree and confirm that the selected project is the intended one.
+5. Configure an AI provider and test it with a small, non-sensitive prompt.
+6. Run a supported analysis or agent task and inspect the returned result and logs.
+7. Review the Monitoring and Knowledge Graph/Memory views after activity has occurred.
+8. Capture updated screenshots only after the UI is stable, and make sure the screenshots match the checked-in implementation.
 
 ## 🧰 Technology stack
 
