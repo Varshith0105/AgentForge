@@ -1,275 +1,357 @@
-# AgentForge
+<!-- AgentForge README -->
+<div align="center">
+# ⚒️ AgentForge
+### Your local-first AI engineering workspace.
+**Explore repositories. Understand code. Run analysis. Work with AI models — from one developer workspace.**
 
-AgentForge is a local-first AI software engineering workspace built around a
-FastAPI API and a React/Vite interface. It combines authenticated project
-management, repository browsing, analysis jobs, GitHub integration, and
-provider-backed AI chat in one developer workspace.
+<p>
+  <img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/Frontend-React%2019-149ECA?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/Language-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Status-Active%20Development-F59E0B?style=for-the-badge" alt="Active development" />
+</p>
 
-> **Status:** Active development. Local startup and core authentication have
-> been verified. AI responses remain provider- and local-service-dependent;
-> this repository does not include a hosted demo or credentials.
+[Features](#-what-is-agentforge) · [Screenshots](#-screenshots) · [Architecture](#-architecture) · [Setup](#-get-started) · [Configuration](#-configuration) · [Security](#-security)
 
-[Architecture](docs/ARCHITECTURE.md) ·
-[Security](docs/SECURITY.md) ·
-[Engineering audit](docs/ENGINEERING_AUDIT.md) ·
-[Mermaid diagrams](docs/diagrams/)
+</div>
 
-## Screenshots from the running application
+---
 
-These images were captured from the local application on 2026-10-29 using a
-synthetic test account. They show genuine rendered states; provider-dependent
-success states are not represented as successful.
+## ✨ What is AgentForge?
 
-| Screen | Preview |
-| --- | --- |
-| Landing page | ![AgentForge landing page](docs/screenshots/01-landing-page.png) |
-| Login | ![AgentForge login](docs/screenshots/02-login.png) |
-| Workspace dashboard | ![AgentForge dashboard](docs/screenshots/03-dashboard.png) |
-| Project workspace with empty state | ![AgentForge workspace](docs/screenshots/04-project-workspace.png) |
-| Provider settings | ![AgentForge provider settings](docs/screenshots/10-settings-or-provider-selection.png) |
-| API documentation | ![AgentForge API documentation](docs/screenshots/11-api-documentation.png) |
-| Mobile landing layout | ![AgentForge mobile layout](docs/screenshots/12-mobile-layout.png) |
+AgentForge is a **local-first AI software engineering workspace** that brings project organization, repository exploration, code analysis, Git operations, and provider-backed AI chat together in one interface.
 
-## What is implemented
+It is built with a **React + TypeScript + Vite frontend** and a **FastAPI backend**. The backend provides authenticated API routes and works with project data, files in a configured workspace, repository-analysis services, Git/GitHub integration, and optional background or vector-search services.
 
-| Capability | Status | Relevant code | Requirements |
-| --- | --- | --- | --- |
-| Landing, login, registration, protected workspace | Implemented | `frontend/src/pages`, `frontend/src/contexts/AuthContext.tsx` | Local API |
-| Project CRUD and owner isolation | Implemented | `backend/app/api/v1/endpoints/projects.py` | Database |
-| Repository file tree and content | Implemented | `backend/app/api/v1/endpoints/files.py` | Owned workspace |
-| Repository analysis | Implemented, service-dependent | `backend/app/api/v1/endpoints/analysis.py` | Repository files |
-| AI chat and routing | Implemented, provider-dependent | `backend/app/core/ai`, `backend/app/services/llm` | Ollama or remote key |
-| GitHub clone and repository metadata | Implemented for GitHub URLs | `backend/app/api/v1/endpoints/github.py` | Git; optional token |
-| Git status, branches, logs, commits | Implemented, workspace-confined | `backend/app/api/v1/endpoints/git.py` | Git |
-| Terminal execution | Disabled by default | `backend/app/api/v1/endpoints/terminal.py` | Explicit opt-in; not a full sandbox |
-| MCP, Celery, Redis, Qdrant | Optional/configured surfaces | `backend/app/services/mcp`, compose files | Validate separately |
-| Hosted deployment and public demo | Not provided | — | Operator-owned infrastructure |
+> **Project status:** Active development. Local UI and core flows have been exercised. AI responses depend on a reachable local model or valid external provider credentials. No hosted public demo is currently provided.
 
-## Technology stack
+## 🚀 Core capabilities
 
-- **Frontend:** React 19, TypeScript, React Router, Vite, Tailwind CSS,
-  Axios, Monaco Editor, TanStack Query.
-- **Backend:** Python, FastAPI, Pydantic Settings, SQLAlchemy, Alembic,
-  bcrypt, JWT, WebSockets, optional Celery.
-- **Data:** SQLite for local development; PostgreSQL, Redis, and Qdrant are
-  optional compose services.
-- **AI:** provider abstractions for Ollama, OpenAI, Anthropic, Google Gemini,
-  Groq, OpenRouter, and NVIDIA NIM. Real responses require a reachable local
-  service or valid provider configuration.
+| Capability | What it provides | Status / dependency |
+|---|---|---|
+| **Project workspace** | Organize projects and browse files within the configured workspace | Available; local backend and database required |
+| **Repository analysis** | Start analysis jobs and inspect repository-level results | Results depend on repository contents and analysis services |
+| **AI chat & provider routing** | Connect local or cloud models from one interface | Requires a working provider configuration |
+| **Git & GitHub integration** | Supported repository metadata and Git operations | Git installation; optional GitHub credential |
+| **Authentication** | Protected routes and user/project ownership checks | Local backend and database |
+| **Optional services** | WebSockets, Celery/Redis, Qdrant and MCP-related routes | Must be configured and validated separately |
 
-## Architecture
+## 🖼️ Screenshots
+
+The images below are checked into `docs/screenshots/` and document local application UI. They are not evidence of a hosted production deployment, and they do not imply that an external AI provider is currently healthy.
+
+<table>
+  <tr>
+    <td width="50%"><h3 align="center">Landing page</h3><a href="docs/screenshots/01-landing-page.png"><img src="docs/screenshots/01-landing-page.png" alt="AgentForge landing page" width="100%" /></a></td>
+    <td width="50%"><h3 align="center">Sign in</h3><a href="docs/screenshots/02-login.png"><img src="docs/screenshots/02-login.png" alt="AgentForge login screen" width="100%" /></a></td>
+  </tr>
+  <tr>
+    <td width="50%"><h3 align="center">Workspace dashboard</h3><a href="docs/screenshots/03-dashboard.png"><img src="docs/screenshots/03-dashboard.png" alt="AgentForge dashboard" width="100%" /></a></td>
+    <td width="50%"><h3 align="center">Dashboard detail</h3><a href="docs/screenshots/04-dashboard-detail.png"><img src="docs/screenshots/04-dashboard-detail.png" alt="AgentForge dashboard detail" width="100%" /></a></td>
+  </tr>
+  <tr>
+    <td width="50%"><h3 align="center">Project workspace</h3><a href="docs/screenshots/04-project-workspace.png"><img src="docs/screenshots/04-project-workspace.png" alt="AgentForge project workspace" width="100%" /></a></td>
+    <td width="50%"><h3 align="center">AI provider settings</h3><a href="docs/screenshots/10-settings-or-provider-selection.png"><img src="docs/screenshots/10-settings-or-provider-selection.png" alt="AgentForge provider settings" width="100%" /></a></td>
+  </tr>
+  <tr>
+    <td width="50%"><h3 align="center">API documentation</h3><a href="docs/screenshots/11-api-documentation.png"><img src="docs/screenshots/11-api-documentation.png" alt="AgentForge Swagger UI" width="100%" /></a></td>
+    <td width="50%"><h3 align="center">Mobile layout</h3><a href="docs/screenshots/12-mobile-layout.png"><img src="docs/screenshots/12-mobile-layout.png" alt="AgentForge mobile landing layout" width="100%" /></a></td>
+  </tr>
+</table>
+
+## 🧰 Technology stack
+
+| Layer | Technologies |
+|---|---|
+| Frontend | React 19, TypeScript, Vite, React Router, Tailwind CSS, TanStack Query, Axios |
+| Code editor | Monaco Editor |
+| Backend | Python, FastAPI, Pydantic Settings, SQLAlchemy |
+| Authentication | bcrypt password hashing, JWT access tokens |
+| Data | SQLite for local development; PostgreSQL-compatible configuration |
+| AI integrations | Ollama, OpenAI, Anthropic/Claude, Google Gemini, Groq, OpenRouter and NVIDIA NIM provider surfaces |
+| Optional services | Celery, Redis, Qdrant, WebSockets, Docker Compose |
+
+## 🏛️ Architecture
+
+### System overview
 
 ```mermaid
-flowchart LR
-  Browser[React and Vite frontend] -->|HTTP and WebSocket| API[FastAPI API]
-  API --> Auth[JWT authentication]
-  API --> DB[(SQLite or PostgreSQL)]
-  API --> Services[Repository, analysis, chat and job services]
-  Services --> Workspace[Workspace root]
-  Services --> AI[AI orchestrator and provider manager]
-  AI -. optional .-> Providers[Ollama, OpenAI, Anthropic, Gemini, Groq]
-  API -. optional .-> Celery[Celery and Redis]
+flowchart TB
+    User([Developer]) --> Browser["React 19 + TypeScript + Vite"]
+    Browser <-->|"HTTP / WebSocket"| API["FastAPI API"]
+    API --> Auth["JWT authentication and authorization"]
+    API --> DB[("SQLAlchemy database<br/>SQLite / PostgreSQL")]
+    API --> Project["Project and repository services"]
+    Project --> Workspace["Configured workspace root"]
+    Project --> Analysis["Analysis and jobs"]
+    API --> Chat["Chat and AI orchestration"]
+    Chat --> Providers{"Configured AI provider"}
+    Providers -.-> Ollama["Local Ollama"]
+    Providers -.-> Cloud["Cloud APIs: OpenAI, Gemini, Claude, Groq"]
+    API -. optional .-> Workers["Celery workers + Redis"]
+    API -. optional .-> Vector["Qdrant vector storage"]
 ```
 
-The browser calls FastAPI routes over HTTP and WebSocket connections. JWT
-dependencies resolve the user before protected operations. Project and
-analysis state is stored through SQLAlchemy, while repository operations are
-confined to `WORKSPACE_ROOT`. The AI orchestrator selects a configured model
-and normalizes provider responses.
+### Request lifecycle
 
-Additional source diagrams:
+```mermaid
+sequenceDiagram
+    actor Developer
+    participant UI as React frontend
+    participant API as FastAPI
+    participant Security as Auth and ownership checks
+    participant DB as SQLAlchemy
+    participant Service as Project / AI service
+    Developer->>UI: Perform an action
+    UI->>API: HTTP request or WebSocket message
+    API->>Security: Validate identity and access
+    Security-->>API: Authorized request
+    API->>DB: Read or write application data
+    API->>Service: Execute requested operation
+    Service-->>API: Result or service error
+    API-->>UI: JSON or streamed response
+    UI-->>Developer: Render status and result
+```
 
+### Detailed diagrams
+
+- [System architecture source](docs/diagrams/system-architecture.mmd)
+- [Authentication flow](docs/diagrams/authentication-flow.mmd)
+- [AI provider flow](docs/diagrams/ai-provider-flow.mmd)
+- [Repository analysis flow](docs/diagrams/repository-analysis-flow.mmd)
 - [Request lifecycle](docs/diagrams/request-lifecycle.mmd)
+- [Deployment architecture](docs/diagrams/deployment-architecture.mmd)
+- [Architecture notes](docs/ARCHITECTURE.md)
+
+## 📁 Repository structure
+
+```text
+AgentForge/
+├── backend/
+│   ├── app/
+│   │   ├── api/v1/endpoints/  # Auth, projects, files, AI, Git, jobs and tools
+│   │   ├── core/              # Settings, database, security and AI components
+│   │   ├── models/            # SQLAlchemy models
+│   │   ├── schemas/           # API request/response schemas
+│   │   └── services/          # Repository, analysis and provider services
+│   ├── tests/                 # Backend tests
+│   ├── .env.example
+│   └── requirements.txt
+├── frontend/
+│   ├── src/pages/             # Landing, auth, dashboard and workspace pages
+│   ├── src/components/        # Reusable UI components
+│   ├── src/services/          # API and WebSocket integrations
+│   └── package.json
+├── docs/
+│   ├── diagrams/              # Editable Mermaid source files
+│   ├── screenshots/           # Application screenshots
+│   ├── ARCHITECTURE.md
+│   ├── ENGINEERING_AUDIT.md
+│   └── SECURITY.md
+├── docker-compose.yml
+├── START_AGENTFORGE.bat
+├── START_AGENTFORGE.ps1
+└── README.md
+```
+
+## 🛠️ Get started
+
+### Prerequisites
+
+- Python 3.11+ recommended
+- Node.js and npm
+- Git
+- Windows PowerShell, macOS Terminal, or Linux shell
+- Optional: Ollama or cloud AI credentials; Redis, Qdrant and PostgreSQL if required by your selected features
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Varshith0105/AgentForge.git
+cd AgentForge
+```
+
+> **Repository access:** AgentForge is currently private, so your GitHub account must have permission to clone it.
+
+### 2. Set up the backend
+
+In Windows PowerShell:
+
+```powershell
+cd backend
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+Copy-Item .env.example .env
+```
+
+Edit `backend/.env` for your local setup. SQLite is the default for local development. Configure an AI provider only if you want to use provider-backed chat.
+
+### 3. Run the backend
+
+From the `backend` directory with the virtual environment activated:
+
+```powershell
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+- API health: [http://localhost:8000/health](http://localhost:8000/health)
+- Swagger docs: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+### 4. Run the frontend
+
+Open a second terminal at the repository root:
+
+```powershell
+cd frontend
+npm ci
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000). If PowerShell blocks the `npm.ps1` shim, use `npm.cmd ci` and `npm.cmd run dev`.
+
+### 5. First workflow
+
+1. Register and sign in with a local development account.
+2. Open the dashboard and create or select a project.
+3. Browse files under your configured workspace root.
+4. Use supported Git and repository analysis functions.
+5. Configure a reachable model provider before relying on AI chat.
+6. Keep terminal execution disabled unless you have reviewed the security implications.
+
+### Windows helper scripts
+
+The repository includes `START_AGENTFORGE.bat`, `START_AGENTFORGE.ps1`, and stop/restart helpers. Review a script before running it and ensure its assumptions match your environment.
+
+## 🔧 Configuration
+
+Use [`backend/.env.example`](backend/.env.example) as the configuration reference. Never commit a populated `.env` file or real API credentials.
+
+| Variable | Purpose |
+|---|---|
+| `ENVIRONMENT` | Runtime environment; use a production value outside local development. |
+| `SECRET_KEY` | JWT signing secret; required outside development and should be at least 32 characters. |
+| `DATABASE_URL` | Database URL; SQLite is the local default, with PostgreSQL configurable. |
+| `CORS_ORIGINS` | Comma-separated list of exact trusted frontend origins. |
+| `WORKSPACE_ROOT` | Base directory for repository/file operations. |
+| `ENABLE_TERMINAL` | Terminal execution switch; defaults to `false`. |
+| `DEFAULT_AI_PROVIDER` | Primary AI provider; Ollama is the configured default. |
+| `OLLAMA_BASE_URL` | Ollama service URL if using a local model. |
+| `OPENAI_API_KEY`, `GEMINI_API_KEY`, `CLAUDE_API_KEY`, `GROQ_API_KEY` | Optional provider credentials. |
+| `OPENROUTER_API_KEY`, `NVIDIA_NIM_API_KEY` | Optional provider credentials. |
+| `REDIS_URL`, `CELERY_BROKER_URL`, `CELERY_RESULT_BACKEND` | Optional background-processing configuration. |
+| `QDRANT_URL` | Optional Qdrant endpoint. |
+
+Generate a random secret locally:
+
+```powershell
+python -c "import secrets; print(secrets.token_urlsafe(32))"
+```
+
+Copy generated secrets only to your local environment or secret manager. Do not place real credentials in source code, screenshots, issue reports, or commits.
+
+## ✅ Tests and verification
+
+Backend tests (run inside `backend` with the repository virtual environment):
+
+```powershell
+python -m pytest -q
+```
+
+Frontend production build:
+
+```powershell
+cd frontend
+npm.cmd ci
+npm.cmd run build
+```
+
+The current local engineering notes report **11 backend tests passing** and a successful frontend production build in the verified checkout. One deprecation warning from the external `google-generativeai` package remains. These are local results—not a claim that CI is configured or that production deployment has been tested.
+
+Browser checks documented in [`docs/ENGINEERING_AUDIT.md`](docs/ENGINEERING_AUDIT.md) covered landing, authentication, protected workspace/dashboard, settings, Swagger UI, and mobile landing layout. AI chat returned HTTP 500 from the configured provider during that check. Provider-backed flows should therefore be considered environment-dependent until verified with your own configuration.
+
+## 🔐 Security
+
+Read [`docs/SECURITY.md`](docs/SECURITY.md) before exposing the service to a network. Current protections include bcrypt password hashing, typed JWT validation, ownership checks, workspace path restrictions, ZIP path validation, explicit CORS origins, and terminal execution disabled by default.
+
+> **Security caveat:** AgentForge is in active development and is not described as production-hardened. The optional terminal command allowlist is not a full OS sandbox. Before deployment, configure TLS, secret management, rate limiting, service-access controls, and audit logging; keep databases, Redis, Qdrant, Flower and workspace files off public interfaces.
+
+## 🧭 Current scope
+
+| Area | Status |
+|---|---|
+| Authentication and protected workspace | Implemented; covered by local browser checks |
+| Projects and workspace files | Available; validate against your own workspace |
+| Repository analysis | Available; depends on files and analysis services |
+| AI provider-backed chat | Integration surface implemented; requires a working provider |
+| Git and GitHub operations | Available for supported operations and repository inputs |
+| Terminal execution | Disabled by default; not a full sandbox when enabled |
+| Redis/Celery and Qdrant | Optional; validate separately |
+| Hosted public demo | Not provided |
+| Production hardening | Ongoing |
+
+Useful next steps include provider-level integration tests, database migration validation against a disposable database, stronger operational monitoring, and end-to-end checks for optional integrations.
+
+## 🩺 Troubleshooting
+
+<details>
+<summary><strong>Backend import or module errors</strong></summary>
+
+Run Uvicorn from `backend` with the project virtual environment activated:
+
+```powershell
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
+</details>
+
+<details>
+<summary><strong>CORS errors in the browser</strong></summary>
+
+Set `CORS_ORIGINS` to the exact origin shown by the frontend development server (for example, `http://localhost:3000`) and restart the backend.
+</details>
+
+<details>
+<summary><strong>AI chat unavailable or returns an error</strong></summary>
+
+Confirm the provider is selected and configured, credentials are valid if required, and the service/model is reachable. A rendered UI alone does not prove an external AI API is healthy.
+</details>
+
+<details>
+<summary><strong>PowerShell blocks npm</strong></summary>
+
+Use `npm.cmd ci` and `npm.cmd run build` instead of changing the machine-wide execution policy.
+</details>
+
+<details>
+<summary><strong>Git or file operations fail</strong></summary>
+
+Confirm Git is installed and the project is inside `WORKSPACE_ROOT`. Do not point the workspace at sensitive directories.
+</details>
+
+## 📚 Documentation
+
+- [Architecture overview](docs/ARCHITECTURE.md)
+- [Security guide](docs/SECURITY.md)
+- [Engineering audit and verification](docs/ENGINEERING_AUDIT.md)
+- [System architecture diagram](docs/diagrams/system-architecture.mmd)
 - [AI provider flow](docs/diagrams/ai-provider-flow.mmd)
 - [Repository analysis flow](docs/diagrams/repository-analysis-flow.mmd)
 - [Authentication flow](docs/diagrams/authentication-flow.mmd)
 - [Deployment architecture](docs/diagrams/deployment-architecture.mmd)
 
-## Repository layout
+## 🤝 Contributing
 
-```text
-agentforge/
-├── backend/
-│   ├── app/api/v1/endpoints/   # Auth, projects, files, analysis, AI and Git routes
-│   ├── app/core/               # Settings, security, database and AI orchestration
-│   ├── app/models/             # SQLAlchemy models
-│   ├── app/services/           # Analysis, repository, provider, MCP and tool services
-│   ├── tests/                  # Backend tests
-│   └── requirements.txt
-├── frontend/
-│   ├── src/pages/              # Landing, auth and workspace pages
-│   ├── src/components/         # Workspace and chat components
-│   ├── src/services/           # HTTP and WebSocket clients
-│   └── package.json
-├── docs/
-│   ├── diagrams/               # Editable Mermaid source
-│   └── screenshots/            # Verified local browser captures
-├── docker-compose.yml
-└── README.md
-```
+Focused bug reports and contributions are welcome. Keep changes small, add regression tests where practical, run backend tests and the frontend build, and update docs when routes or configuration change. Never commit credentials, local databases, generated caches, or private user data.
 
-## Local setup
+## 📄 License
 
-### Windows PowerShell
+No repository license is currently selected. Until a license is added, do not assume that the code is available for unrestricted reuse or redistribution.
 
-Backend terminal:
+---
 
-```powershell
-cd E:\agentforge\backend
-py -3 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-Copy-Item .env.example .env
-python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
-```
+<div align="center">
+**Built for developers who want their AI engineering workflow in one workspace.**
 
-Frontend terminal:
-
-```powershell
-cd E:\agentforge\frontend
-npm ci
-npm run dev -- --host 127.0.0.1
-```
-
-Open `http://localhost:3000`. The API health check is
-`http://localhost:8000/health` and Swagger UI is `http://localhost:8000/docs`.
-
-### Linux/macOS
-
-Use `python3 -m venv .venv`, the platform-specific activation command, and
-`npm ci`. The Uvicorn and Vite commands are otherwise the same.
-
-## Configuration reference
-
-Copy [`backend/.env.example`](backend/.env.example) to `backend/.env`.
-
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `ENVIRONMENT` | Local default | `development` enables a generated local signing key; use `production` outside local development. |
-| `SECRET_KEY` | Required outside development | Random JWT signing secret, at least 32 characters. Restart after changing. |
-| `DATABASE_URL` | Optional | Defaults to local SQLite; set PostgreSQL for a deployed database. |
-| `CORS_ORIGINS` | Optional | Comma-separated exact browser origins, such as `http://localhost:3000`. |
-| `WORKSPACE_ROOT` | Optional | Root for repository and file operations; defaults to `repos`. |
-| `ENABLE_TERMINAL` | Optional | `false` by default. Enabling it is not equivalent to sandboxing. |
-| `DEFAULT_AI_PROVIDER` | Optional | Defaults to `ollama`; selects the primary provider. |
-| `OLLAMA_BASE_URL` | Optional | Local Ollama OpenAI-compatible endpoint. |
-| `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`, `GROQ_API_KEY` | Optional | Remote provider credentials; never commit them. |
-| `OPENROUTER_API_KEY`, `NVIDIA_NIM_API_KEY` | Optional | Additional provider credentials. |
-| `CELERY_BROKER_URL`, `CELERY_RESULT_BACKEND` | Optional | Redis endpoints for background jobs. |
-| `QDRANT_URL`, `QDRANT_API_KEY` | Optional | Vector-store integration settings. |
-
-## Typical workflow
-
-1. Register a synthetic or local developer account.
-2. Sign in and open the protected workspace.
-3. Create or clone a project into the configured workspace root.
-4. Browse files and start repository analysis.
-5. Select an AI provider and send a chat request when its service is
-   configured and reachable.
-6. Review analysis, jobs, monitoring, and repository results.
-
-## API surface
-
-Swagger/OpenAPI is generated at `/docs` when the backend is running. The main
-route groups are `/auth`, `/projects`, `/files`, `/analysis`, `/github`,
-`/git`, `/chats`, `/agents`, `/jobs`, `/ai-os`, `/knowledge-engine`,
-`/observability`, `/terminal`, and `/tools`.
-
-Example health request:
-
-```powershell
-Invoke-WebRequest http://localhost:8000/health
-```
-
-Example project request shape (requires a bearer token):
-
-```json
-{
-  "name": "sample-repository",
-  "description": "Synthetic local project",
-  "branch": "main"
-}
-```
-
-## Security and privacy
-
-Passwords are hashed with bcrypt and access tokens are type-checked JWTs.
-Protected project and analysis operations enforce owner checks. File, Git,
-tool, and upload paths are canonicalized against the workspace; ZIP traversal
-entries are rejected. CORS requires explicit origins, and terminal execution
-is disabled by default.
-
-This is not a claim of complete production security. Review
-[`docs/SECURITY.md`](docs/SECURITY.md) before deployment. Keep databases,
-Redis, Qdrant, Flower, workspaces, `.env` files, and provider credentials
-private.
-
-## Verification
-
-Automated checks verified in this checkout:
-
-```powershell
-cd E:\agentforge\backend
-.\.venv\Scripts\python.exe -m pytest -q
-# 11 passed; one external google-generativeai deprecation warning remains
-
-cd E:\agentforge\frontend
-npm.cmd run build
-# TypeScript and Vite production build passed
-```
-
-Manual browser verification on 2026-10-29:
-
-| Flow | Result |
-| --- | --- |
-| Landing page, login, registration | Pass |
-| Protected workspace and dashboard | Pass |
-| Synthetic account persistence | Pass |
-| Settings/provider selection view | Pass |
-| Swagger UI | Pass |
-| Mobile landing render | Pass |
-| AI response | Blocked: configured provider returned HTTP 500 in this environment |
-| Project/repository analysis | Not run: no synthetic repository was created |
-
-The registration error-rendering bug found during browser testing was fixed by
-normalizing structured FastAPI validation errors in
-`frontend/src/utils/errors.ts`.
-
-## Troubleshooting
-
-- **Backend does not start:** use the repository virtual environment and run
-  from `backend`; check `backend/.env` without printing its values.
-- **CORS errors:** set `CORS_ORIGINS` to the exact Vite origin and restart the
-  backend.
-- **AI HTTP 500/unavailable:** verify Ollama is running with the configured
-  model, or configure a valid remote provider key. Do not treat the UI shell
-  as proof of provider availability.
-- **Git or file errors:** use paths below `WORKSPACE_ROOT` and ensure Git is
-  installed.
-- **Frontend dependency issues:** run `npm ci` from `frontend`; use
-  `npm.cmd` if PowerShell blocks `npm.ps1`.
-- **Docker configuration:** provide `SECRET_KEY` and `POSTGRES_PASSWORD`
-  through the environment and validate with `docker compose config`.
-
-## Limitations and future work
-
-Alembic configuration exists but should be validated against a disposable
-database before production migration use. Terminal execution is intentionally
-disabled by default and the optional allowlist is not a complete sandbox.
-Provider integrations need service-level tests and operational monitoring.
-There is no hosted demo, selected license, or claim of production readiness.
-
-See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) and
-[`docs/ENGINEERING_AUDIT.md`](docs/ENGINEERING_AUDIT.md) for design details
-and remaining technical debt.
-
-## Contributing
-
-Create a focused branch, make a small change, add or update regression tests,
-run the backend and frontend checks, and update relevant documentation. Never
-commit secrets, local databases, caches, or generated environment files.
-
-## License
-
-No license has been selected for this repository yet. The project owner must
-choose and add one before redistributing the code.
+[AgentForge repository](https://github.com/Varshith0105/AgentForge) · [Report an issue](https://github.com/Varshith0105/AgentForge/issues)
+</div>
