@@ -1,0 +1,13 @@
+sequenceDiagram
+  participant UI as Browser UI
+  participant API as FastAPI route
+  participant JWT as JWT dependency
+  participant DB as SQLAlchemy
+  participant SVC as Service layer
+  UI->>API: Send authenticated request
+  API->>JWT: Validate access token
+  JWT->>DB: Resolve user
+  API->>DB: Check ownership and persist state
+  API->>SVC: Execute requested operation
+  SVC-->>API: Result or explicit error
+  API-->>UI: JSON or streaming response

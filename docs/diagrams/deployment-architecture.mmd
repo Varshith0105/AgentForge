@@ -1,0 +1,7 @@
+flowchart LR
+  Browser[Local browser] --> Frontend[Vite dev server or built assets]
+  Frontend --> Backend[Uvicorn FastAPI service]
+  Backend --> DB[(SQLite local database)]
+  Backend -. Docker option .-> Postgres[(PostgreSQL)]
+  Backend -. optional .-> Redis[Redis for Celery]
+  Backend -. optional .-> Qdrant[Qdrant vector store]

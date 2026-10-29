@@ -1,0 +1,13 @@
+sequenceDiagram
+  participant UI as Browser
+  participant API as Auth API
+  participant DB as User database
+  UI->>API: Register email and password
+  API->>DB: Store bcrypt password hash
+  UI->>API: Login with form credentials
+  API->>DB: Verify password
+  API-->>UI: Access and refresh JWTs
+  UI->>API: Protected request with access JWT
+  API-->>UI: Authorized response
+  UI->>API: Logout
+  API-->>UI: Logout acknowledgement; client clears tokens

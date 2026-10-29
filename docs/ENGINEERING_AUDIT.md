@@ -26,6 +26,19 @@ blocked the `npm.ps1` shim. Use the repository virtual environment's Python
 and `npm.cmd` on Windows. Docker Compose syntax was parsed successfully before
 the required-secret placeholders were introduced.
 
+## Browser verification
+
+The local backend and Vite development server were started on
+`127.0.0.1:8000` and `127.0.0.1:3000`. Landing, login, registration with a
+synthetic account, the protected workspace, dashboard, settings, Swagger UI,
+and the mobile landing layout were exercised. Registration initially exposed a
+frontend crash when FastAPI returned structured validation errors; the
+normalizer in `frontend/src/utils/errors.ts` now renders those errors safely.
+
+AI chat was exercised but blocked by an HTTP 500 from the configured provider
+in this environment. No provider success screenshot was created. Repository
+analysis was not claimed because no synthetic repository was created.
+
 ## Remaining work
 
 Validate the full test suite with installed dependencies, run the frontend

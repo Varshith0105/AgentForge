@@ -1,0 +1,11 @@
+flowchart TD
+  Request[Chat or agent request] --> Router[AI orchestrator]
+  Router --> Registry[Model registry and task routing]
+  Registry --> Provider[Provider manager]
+  Provider --> Ollama[Ollama local provider]
+  Provider --> Remote[Configured remote provider]
+  Ollama --> Result[Normalized response]
+  Remote --> Result
+  Result --> UI[API response or stream]
+  Provider -. unavailable or failed .-> Fallback[Configured fallback policy]
+  Fallback -.-> Remote

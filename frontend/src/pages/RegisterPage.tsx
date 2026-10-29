@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Zap, Lock, Mail, User as UserIcon, ArrowRight } from 'lucide-react';
+import { getErrorMessage } from '../utils/errors';
 
 export const RegisterPage: React.FC = () => {
   const { register } = useAuth();
@@ -19,8 +20,8 @@ export const RegisterPage: React.FC = () => {
     try {
       await register(name, email, password);
       navigate('/app');
-    } catch (err: any) {
-      setError(err.response?.data?.detail || err.message || 'Registration failed');
+    } catch (err: unknown) {
+      setError(getErrorMessage(err, 'Registration failed'));
     } finally {
       setIsLoading(false);
     }

@@ -1,0 +1,9 @@
+flowchart LR
+  Browser[React and Vite frontend] -->|HTTP and WebSocket| API[FastAPI API]
+  API --> Auth[JWT authentication]
+  API --> DB[(SQLite or PostgreSQL)]
+  API --> Services[Repository, analysis, chat and job services]
+  Services --> Workspace[Workspace root]
+  Services --> AI[AI orchestrator and provider manager]
+  AI -. optional .-> Providers[Ollama, OpenAI, Anthropic, Gemini, Groq]
+  API -. optional .-> Celery[Celery and Redis]

@@ -1,0 +1,8 @@
+flowchart LR
+  User[Authenticated user] --> Project[Owned project]
+  Project --> Root[Workspace-confined repository]
+  Root --> Files[Safe file traversal]
+  Files --> Parser[Repository parser and AST analysis]
+  Parser --> Analysis[Analysis record]
+  Analysis --> DB[(Database)]
+  DB --> UI[Dashboard and status views]

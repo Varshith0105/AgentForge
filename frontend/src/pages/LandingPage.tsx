@@ -63,7 +63,7 @@ export const LandingPage: React.FC = () => {
             onClick={() => navigate('/app')}
             className="px-6 py-3.5 rounded-xl glass-card text-text-primary font-semibold text-sm hover:bg-surface-hover transition border border-border"
           >
-            Explore Live Demo
+            Open Workspace
           </button>
         </div>
       </section>
@@ -84,7 +84,7 @@ export const LandingPage: React.FC = () => {
           {
             icon: Terminal,
             title: 'Execution & Tool Engine',
-            desc: 'Safe, sandboxed terminal tool execution for running git, shell commands, and automated builds.',
+            desc: 'Workspace-scoped repository tools, with terminal execution disabled by default.',
           },
         ].map((feat, idx) => {
           const Icon = feat.icon;
@@ -102,7 +102,7 @@ export const LandingPage: React.FC = () => {
 
       {/* Footer */}
       <footer className="mt-auto py-6 text-center text-xs text-text-muted border-t border-border/50">
-        AgentForge &copy; 2026. Production AI Software Engineering Platform.
+        AgentForge &copy; 2026. Local-first AI software engineering workspace.
       </footer>
     </div>
   );

@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useState, useCallback } from 'react';
 import { useWorkspace } from '../../contexts/WorkspaceContext';
 import { api, FileTreeNode } from '../../services/api';
+import { getErrorMessage } from '../../utils/errors';
 import {
   Folder, FolderOpen, File, FileCode, ChevronRight, ChevronDown,
   RefreshCw, Loader2, Search, GitBranch, AlertCircle
@@ -99,8 +100,8 @@ export const FileExplorer: React.FC = () => {
       const res = await api.files.getTree(currentProject.id);
       setTree(res.tree);
       setTotalFiles(res.total_files);
-    } catch (err: any) {
-      const msg = err?.response?.data?.detail || 'Failed to load file tree';
+    } catch (err: unknown) {
+      const msg = getErrorMessage(err, 'Failed to load file tree');
       setError(msg);
     } finally {
       setIsLoading(false);
@@ -125,7 +126,7 @@ export const FileExplorer: React.FC = () => {
       openFile({
         name: node.name,
         path: node.path,
-        content: `// Unable to load file: ${err?.response?.data?.detail || err.message}\n// File: ${node.path}`,
+        content: `// Unable to load file: ${getErrorMessage(err, 'Unknown error')}\n// File: ${node.path}`,
         language: node.language || 'plaintext',
       });
     } finally {

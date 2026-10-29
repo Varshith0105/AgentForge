@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Zap, Lock, Mail, ArrowRight } from 'lucide-react';
+import { getErrorMessage } from '../utils/errors';
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();
@@ -18,8 +19,8 @@ export const LoginPage: React.FC = () => {
     try {
       await login(email, password);
       navigate('/app');
-    } catch (err: any) {
-      setError(err.response?.data?.detail || err.message || 'Login failed');
+    } catch (err: unknown) {
+      setError(getErrorMessage(err, 'Login failed'));
     } finally {
       setIsLoading(false);
     }
