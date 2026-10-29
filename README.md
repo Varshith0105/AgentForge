@@ -38,26 +38,71 @@ It is built with a **React + TypeScript + Vite frontend** and a **FastAPI backen
 
 ## 🖼️ Screenshots
 
-The images below are checked into `docs/screenshots/` and document local application UI. They are not evidence of a hosted production deployment, and they do not imply that an external AI provider is currently healthy.
+These screenshots show how AgentForge looks when the application is running locally. Each image keeps its **original aspect ratio**—no forced stretching or unnecessary cropping.
 
-<table>
-  <tr>
-    <td width="50%"><h3 align="center">Landing page</h3><a href="docs/screenshots/01-landing-page.png"><img src="docs/screenshots/01-landing-page.png" alt="AgentForge landing page" width="100%" /></a></td>
-    <td width="50%"><h3 align="center">Sign in</h3><a href="docs/screenshots/02-login.png"><img src="docs/screenshots/02-login.png" alt="AgentForge login screen" width="100%" /></a></td>
-  </tr>
-  <tr>
-    <td width="50%"><h3 align="center">Workspace dashboard</h3><a href="docs/screenshots/03-dashboard.png"><img src="docs/screenshots/03-dashboard.png" alt="AgentForge dashboard" width="100%" /></a></td>
-    <td width="50%"><h3 align="center">Dashboard detail</h3><a href="docs/screenshots/04-dashboard-detail.png"><img src="docs/screenshots/04-dashboard-detail.png" alt="AgentForge dashboard detail" width="100%" /></a></td>
-  </tr>
-  <tr>
-    <td width="50%"><h3 align="center">Project workspace</h3><a href="docs/screenshots/04-project-workspace.png"><img src="docs/screenshots/04-project-workspace.png" alt="AgentForge project workspace" width="100%" /></a></td>
-    <td width="50%"><h3 align="center">AI provider settings</h3><a href="docs/screenshots/10-settings-or-provider-selection.png"><img src="docs/screenshots/10-settings-or-provider-selection.png" alt="AgentForge provider settings" width="100%" /></a></td>
-  </tr>
-  <tr>
-    <td width="50%"><h3 align="center">API documentation</h3><a href="docs/screenshots/11-api-documentation.png"><img src="docs/screenshots/11-api-documentation.png" alt="AgentForge Swagger UI" width="100%" /></a></td>
-    <td width="50%"><h3 align="center">Mobile layout</h3><a href="docs/screenshots/12-mobile-layout.png"><img src="docs/screenshots/12-mobile-layout.png" alt="AgentForge mobile landing layout" width="100%" /></a></td>
-  </tr>
-</table>
+### 1. Landing page
+
+> **Figure 1 — Landing page:** The AgentForge entry screen introduces the local-first AI software engineering workspace.
+
+<p align="center">
+  <a href="docs/screenshots/01-landing-page.png"><img src="docs/screenshots/01-landing-page.png" alt="AgentForge landing page" width="100%" /></a>
+</p>
+
+### 2. Sign in
+
+> **Figure 2 — Sign-in screen:** The authentication screen used to access the workspace.
+
+<p align="center">
+  <a href="docs/screenshots/02-login.png"><img src="docs/screenshots/02-login.png" alt="AgentForge sign-in screen" width="100%" /></a>
+</p>
+
+### 3. Workspace dashboard
+
+> **Figure 3 — Workspace dashboard:** The main workspace view with project navigation and developer tools.
+
+<p align="center">
+  <a href="docs/screenshots/03-dashboard.png"><img src="docs/screenshots/03-dashboard.png" alt="AgentForge workspace dashboard" width="100%" /></a>
+</p>
+
+### 4. Dashboard detail
+
+> **Figure 4 — Dashboard detail:** A closer look at the dashboard and its project and usage summaries.
+
+<p align="center">
+  <a href="docs/screenshots/04-dashboard-detail.png"><img src="docs/screenshots/04-dashboard-detail.png" alt="AgentForge dashboard detail" width="100%" /></a>
+</p>
+
+### 5. Project workspace
+
+> **Figure 5 — Project workspace:** The coding workspace with project explorer and AI assistant panel.
+
+<p align="center">
+  <a href="docs/screenshots/04-project-workspace.png"><img src="docs/screenshots/04-project-workspace.png" alt="AgentForge project workspace" width="100%" /></a>
+</p>
+
+### 6. AI provider settings
+
+> **Figure 6 — AI provider settings:** The settings screen for choosing and configuring a model provider.
+
+<p align="center">
+  <a href="docs/screenshots/10-settings-or-provider-selection.png"><img src="docs/screenshots/10-settings-or-provider-selection.png" alt="AgentForge AI provider settings" width="100%" /></a>
+</p>
+
+### 7. API documentation
+
+> **Figure 7 — API documentation:** The FastAPI Swagger UI for exploring available endpoints and trying requests. The image is kept at its natural proportions so the endpoint details remain visible; open it to inspect the full-size screenshot.
+
+<p align="center">
+  <a href="docs/screenshots/11-api-documentation.png"><img src="docs/screenshots/11-api-documentation.png" alt="AgentForge FastAPI Swagger UI documentation" width="100%" /></a>
+</p>
+
+### 8. Mobile layout
+
+> **Figure 8 — Mobile layout:** A view of the AgentForge landing page at a narrow viewport.
+
+<p align="center">
+  <a href="docs/screenshots/12-mobile-layout.png"><img src="docs/screenshots/12-mobile-layout.png" alt="AgentForge mobile landing layout" width="100%" /></a>
+</p>
 
 ## 🧰 Technology stack
 
