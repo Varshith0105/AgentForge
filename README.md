@@ -42,20 +42,20 @@ The images below are checked into `docs/screenshots/` and document local applica
 
 <table>
   <tr>
-    <td width="50%"><h3 align="center">Landing page</h3><a href="docs/screenshots/01-landing-page.png"><img src="docs/screenshots/01-landing-page.png" alt="AgentForge landing page" width="100%" /></a></td>
-    <td width="50%"><h3 align="center">Sign in</h3><a href="docs/screenshots/02-login.png"><img src="docs/screenshots/02-login.png" alt="AgentForge login screen" width="100%" /></a></td>
+    <td width="50%"><h3 align="center">Landing page</h3><a href="docs/screenshots/01-landing-page.png"><img src="docs/screenshots/01-landing-page.png" alt="AgentForge landing page" width="640" height="360" style="width:100%; aspect-ratio:16/9; object-fit:cover;" /></a></td>
+    <td width="50%"><h3 align="center">Sign in</h3><a href="docs/screenshots/02-login.png"><img src="docs/screenshots/02-login.png" alt="AgentForge login screen" width="640" height="360" style="width:100%; aspect-ratio:16/9; object-fit:cover;" /></a></td>
   </tr>
   <tr>
-    <td width="50%"><h3 align="center">Workspace dashboard</h3><a href="docs/screenshots/03-dashboard.png"><img src="docs/screenshots/03-dashboard.png" alt="AgentForge dashboard" width="100%" /></a></td>
-    <td width="50%"><h3 align="center">Dashboard detail</h3><a href="docs/screenshots/04-dashboard-detail.png"><img src="docs/screenshots/04-dashboard-detail.png" alt="AgentForge dashboard detail" width="100%" /></a></td>
+    <td width="50%"><h3 align="center">Workspace dashboard</h3><a href="docs/screenshots/03-dashboard.png"><img src="docs/screenshots/03-dashboard.png" alt="AgentForge dashboard" width="640" height="360" style="width:100%; aspect-ratio:16/9; object-fit:cover;" /></a></td>
+    <td width="50%"><h3 align="center">Dashboard detail</h3><a href="docs/screenshots/04-dashboard-detail.png"><img src="docs/screenshots/04-dashboard-detail.png" alt="AgentForge dashboard detail" width="640" height="360" style="width:100%; aspect-ratio:16/9; object-fit:cover;" /></a></td>
   </tr>
   <tr>
-    <td width="50%"><h3 align="center">Project workspace</h3><a href="docs/screenshots/04-project-workspace.png"><img src="docs/screenshots/04-project-workspace.png" alt="AgentForge project workspace" width="100%" /></a></td>
-    <td width="50%"><h3 align="center">AI provider settings</h3><a href="docs/screenshots/10-settings-or-provider-selection.png"><img src="docs/screenshots/10-settings-or-provider-selection.png" alt="AgentForge provider settings" width="100%" /></a></td>
+    <td width="50%"><h3 align="center">Project workspace</h3><a href="docs/screenshots/04-project-workspace.png"><img src="docs/screenshots/04-project-workspace.png" alt="AgentForge project workspace" width="640" height="360" style="width:100%; aspect-ratio:16/9; object-fit:cover;" /></a></td>
+    <td width="50%"><h3 align="center">AI provider settings</h3><a href="docs/screenshots/10-settings-or-provider-selection.png"><img src="docs/screenshots/10-settings-or-provider-selection.png" alt="AgentForge provider settings" width="640" height="360" style="width:100%; aspect-ratio:16/9; object-fit:cover;" /></a></td>
   </tr>
   <tr>
-    <td width="50%"><h3 align="center">API documentation</h3><a href="docs/screenshots/11-api-documentation.png"><img src="docs/screenshots/11-api-documentation.png" alt="AgentForge Swagger UI" width="100%" /></a></td>
-    <td width="50%"><h3 align="center">Mobile layout</h3><a href="docs/screenshots/12-mobile-layout.png"><img src="docs/screenshots/12-mobile-layout.png" alt="AgentForge mobile landing layout" width="100%" /></a></td>
+    <td width="50%"><h3 align="center">API documentation</h3><a href="docs/screenshots/11-api-documentation.png"><img src="docs/screenshots/11-api-documentation.png" alt="AgentForge Swagger UI" width="640" height="360" style="width:100%; aspect-ratio:16/9; object-fit:cover;" /></a></td>
+    <td width="50%"><h3 align="center">Mobile layout</h3><a href="docs/screenshots/12-mobile-layout.png"><img src="docs/screenshots/12-mobile-layout.png" alt="AgentForge mobile landing layout" width="640" height="360" style="width:100%; aspect-ratio:16/9; object-fit:cover;" /></a></td>
   </tr>
 </table>
 
