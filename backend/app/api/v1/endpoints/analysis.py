@@ -2,7 +2,7 @@
 import os
 import re
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, BackgroundTasks
 from sqlalchemy.orm import Session
@@ -49,7 +49,7 @@ async def start_analysis(
         project_id=payload.project_id,
         status="running",
         analysis_type=payload.analysis_type or "full",
-        started_at=datetime.utcnow(),
+        started_at=datetime.now(timezone.utc),
     )
     db.add(analysis)
     db.commit()
@@ -72,7 +72,12 @@ def _run_real_analysis(analysis_id: str, project_id: str, repo_path: Optional[st
 
     db = SessionLocal()
     try:
-        analysis = db.query(Analysis).filter(Analysis.id == analysis_id).first()
+        analysis = (
+            db.query(Analysis)
+            .join(Project, Analysis.project_id == Project.id)
+            .filter(Analysis.id == analysis_id, Project.owner_id == current_user.id)
+            .first()
+        )
         if not analysis:
             return
 
@@ -122,7 +127,7 @@ def _run_real_analysis(analysis_id: str, project_id: str, repo_path: Optional[st
 
         analysis.status = "completed"
         analysis.result_json = result
-        analysis.completed_at = datetime.utcnow()
+        analysis.completed_at = datetime.now(timezone.utc)
 
         project = db.query(Project).filter(Project.id == project_id).first()
         if project:
@@ -288,31 +293,40 @@ async def upload_repository(
     import zipfile
     import shutil
 
-    if not file.filename.endswith(".zip"):
+    filename = os.path.basename(file.filename or "")
+    if not filename.lower().endswith(".zip") or filename != file.filename:
         raise HTTPException(status_code=400, detail="Only .zip files are supported")
 
     upload_dir = os.path.join("uploads", str(current_user.id))
     os.makedirs(upload_dir, exist_ok=True)
 
-    zip_path = os.path.join(upload_dir, file.filename)
+    zip_path = os.path.join(upload_dir, filename)
     with open(zip_path, "wb") as f:
         content = await file.read()
         f.write(content)
 
-    extract_path = os.path.join(upload_dir, file.filename.replace(".zip", ""))
+    extract_path = os.path.join(upload_dir, filename[:-4])
     os.makedirs(extract_path, exist_ok=True)
     with zipfile.ZipFile(zip_path, "r") as zf:
+        root = os.path.realpath(extract_path)
+        for member in zf.infolist():
+            target = os.path.realpath(os.path.join(extract_path, member.filename))
+            if not (target == root or target.startswith(root + os.sep)):
+                raise HTTPException(status_code=400, detail="Archive contains an unsafe path")
         zf.extractall(extract_path)
 
     if project_id:
-        project = db.query(Project).filter(Project.id == project_id).first()
-        if project:
-            project.repo_path = extract_path
-            project.status = "ready"
+        project = db.query(Project).filter(
+            Project.id == project_id, Project.owner_id == current_user.id
+        ).first()
+        if not project:
+            raise HTTPException(status_code=404, detail="Project not found")
+        project.repo_path = extract_path
+        project.status = "ready"
     else:
         project = Project(
             id=str(uuid.uuid4()),
-            name=file.filename.replace(".zip", ""),
+            name=filename[:-4],
             owner_id=current_user.id,
             repo_path=extract_path,
             status="ready",

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
@@ -39,7 +39,7 @@ def get_metrics(current_user: User = Depends(deps.get_current_user), db: Session
         "cpu_usage": cpu_usage,
         "memory_usage": memory_usage,
         "websocket_connections": ws_manager.active_connections_count(),
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 
@@ -47,7 +47,7 @@ def get_metrics(current_user: User = Depends(deps.get_current_user), db: Session
 def health_status():
     return {
         "status": "healthy",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "services": {
             "api": "up",
             "database": "up",

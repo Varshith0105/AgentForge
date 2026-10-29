@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, String, Boolean, DateTime, Text, Float, Integer, JSON, ForeignKey
 from sqlalchemy.orm import relationship
 from app.core.database import Base
@@ -24,8 +24,8 @@ class Project(Base):
     is_analyzed = Column(Boolean, default=False)
     status = Column(String, default="pending")
     metadata_json = Column(JSON, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     analyses = relationship("Analysis", back_populates="project", cascade="all, delete-orphan")
     chats = relationship("Chat", back_populates="project", cascade="all, delete-orphan")
@@ -42,7 +42,7 @@ class Analysis(Base):
     error_message = Column(Text, nullable=True)
     started_at = Column(DateTime, nullable=True)
     completed_at = Column(DateTime, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     project = relationship("Project", back_populates="analyses")
     reports = relationship("AnalysisReport", back_populates="analysis", cascade="all, delete-orphan")
@@ -60,7 +60,7 @@ class AnalysisReport(Base):
     file_path = Column(String, nullable=True)
     line_number = Column(Integer, nullable=True)
     metadata_json = Column(JSON, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     analysis = relationship("Analysis", back_populates="reports")
 
@@ -76,8 +76,8 @@ class Chat(Base):
     provider = Column(String, nullable=True)
     total_tokens = Column(Integer, default=0)
     total_cost = Column(Float, default=0.0)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     project = relationship("Project", back_populates="chats")
     messages = relationship("Message", back_populates="chat", cascade="all, delete-orphan", order_by="Message.created_at")
@@ -94,6 +94,6 @@ class Message(Base):
     tokens_used = Column(Integer, default=0)
     cost = Column(Float, default=0.0)
     metadata_json = Column(JSON, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     chat = relationship("Chat", back_populates="messages")

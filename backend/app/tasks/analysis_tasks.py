@@ -8,7 +8,7 @@ async def run_analysis_task(analysis_id: str, project_id: str, repo_path: str = 
     """Run full analysis in background."""
     from app.core.database import SessionLocal
     from app.models.models import Analysis, Project
-    from datetime import datetime
+    from datetime import datetime, timezone
 
     db = SessionLocal()
     try:
@@ -37,7 +37,7 @@ async def run_analysis_task(analysis_id: str, project_id: str, repo_path: str = 
 
         analysis.status = "completed"
         analysis.result_json = result
-        analysis.completed_at = datetime.utcnow()
+        analysis.completed_at = datetime.now(timezone.utc)
 
         project = db.query(Project).filter(Project.id == project_id).first()
         if project:

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import APIRouter, Depends
 from app.api import deps
 from app.models.user import User
@@ -15,7 +15,7 @@ def get_cost_summary(current_user: User = Depends(deps.get_current_user)):
         "by_model": {},
         "period": "all_time",
         "currency": "USD",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 

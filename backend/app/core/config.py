@@ -1,5 +1,8 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+import secrets
 from typing import Optional
+
+from pydantic import model_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -12,12 +15,17 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./app.db"
 
     # Security
-    SECRET_KEY: str = "super-secret-key-change-in-production-min-32-chars"
+    ENVIRONMENT: str = "development"
+    SECRET_KEY: str = ""
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30  # 30 days
 
     # Frontend / CORS
-    CORS_ORIGINS: str = "*"
+    CORS_ORIGINS: str = "http://localhost:3000,http://localhost:5173"
+
+    # Local execution boundaries
+    WORKSPACE_ROOT: str = "repos"
+    ENABLE_TERMINAL: bool = False
 
     # AI Providers
     OPENAI_API_KEY: Optional[str] = None
@@ -91,6 +99,23 @@ class Settings(BaseSettings):
     # Qdrant (optional vector store)
     QDRANT_URL: Optional[str] = "http://localhost:6333"
     QDRANT_API_KEY: Optional[str] = None
+
+    @model_validator(mode="after")
+    def validate_security_settings(self) -> "Settings":
+        if not self.SECRET_KEY:
+            if self.ENVIRONMENT.lower() in {"development", "test"}:
+                self.SECRET_KEY = secrets.token_urlsafe(32)
+            else:
+                raise ValueError("SECRET_KEY must be configured outside development")
+        if len(self.SECRET_KEY) < 32:
+            raise ValueError("SECRET_KEY must contain at least 32 characters")
+        if self.CORS_ORIGINS.strip() == "*":
+            raise ValueError("CORS_ORIGINS must list explicit origins")
+        return self
+
+    @property
+    def cors_origin_list(self) -> list[str]:
+        return [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
 
 
 settings = Settings()

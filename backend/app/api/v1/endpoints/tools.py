@@ -1,5 +1,8 @@
-from fastapi import APIRouter, Depends
+from pathlib import Path
+
+from fastapi import APIRouter, Depends, HTTPException
 from app.api import deps
+from app.core.config import settings
 from app.models.user import User
 
 router = APIRouter()
@@ -12,7 +15,6 @@ def list_tools(current_user: User = Depends(deps.get_current_user)):
             {"name": "read_file", "description": "Read a file from disk"},
             {"name": "write_file", "description": "Write content to a file"},
             {"name": "list_directory", "description": "List files in a directory"},
-            {"name": "run_command", "description": "Run a shell command"},
             {"name": "search_code", "description": "Search for code patterns"},
             {"name": "git_status", "description": "Get git repository status"},
             {"name": "git_commit", "description": "Commit changes to git"},
@@ -26,32 +28,30 @@ def execute_tool(payload: dict, current_user: User = Depends(deps.get_current_us
     tool_name = payload.get("tool")
     args = payload.get("args", {})
 
+    root = Path(settings.WORKSPACE_ROOT).resolve()
+
+    def safe_path(value: str, directory: bool = False) -> Path:
+        candidate = (root / value).resolve()
+        try:
+            candidate.relative_to(root)
+        except ValueError as exc:
+            raise HTTPException(status_code=403, detail="Path is outside the workspace") from exc
+        if directory and not candidate.is_dir():
+            raise HTTPException(status_code=404, detail="Directory not found")
+        return candidate
+
     if tool_name == "read_file":
-        import os
-        path = args.get("path", "")
-        if os.path.exists(path):
-            with open(path, "r", encoding="utf-8", errors="ignore") as f:
-                return {"result": f.read(), "success": True}
+        path = safe_path(args.get("path", ""))
+        if path.is_file():
+            return {"result": path.read_text(encoding="utf-8", errors="ignore"), "success": True}
         return {"result": None, "success": False, "error": "File not found"}
 
     elif tool_name == "list_directory":
-        import os
-        path = args.get("path", ".")
-        if os.path.exists(path):
-            items = []
-            for item in os.listdir(path):
-                full = os.path.join(path, item)
-                items.append({"name": item, "type": "dir" if os.path.isdir(full) else "file"})
-            return {"result": items, "success": True}
-        return {"result": [], "success": False, "error": "Directory not found"}
+        path = safe_path(args.get("path", "."), directory=True)
+        items = [{"name": item.name, "type": "dir" if item.is_dir() else "file"} for item in path.iterdir()]
+        return {"result": items, "success": True}
 
     elif tool_name == "run_command":
-        import subprocess
-        cmd = args.get("command", "")
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=30)
-        return {
-            "result": {"stdout": result.stdout, "stderr": result.stderr, "returncode": result.returncode},
-            "success": result.returncode == 0,
-        }
+        raise HTTPException(status_code=503, detail="Command execution is disabled")
 
     return {"result": None, "success": False, "error": f"Unknown tool: {tool_name}"}

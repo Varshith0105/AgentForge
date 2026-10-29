@@ -1,271 +1,136 @@
-# AgentForge — Autonomous AI Software Engineering Platform
+# AgentForge
 
-AgentForge is a production-ready AI-powered Software Engineering Platform with complete Model Context Protocol (MCP) support, featuring 59 AI-accessible tools across 7 specialized servers, enterprise-grade security, and one-command deployment.
+AgentForge is a local-first AI software engineering workspace with a FastAPI
+backend and a React/Vite frontend. It provides authenticated project
+management, repository browsing, analysis jobs, chat, and optional AI provider
+integrations.
 
-## 🎉 Phase 7 Complete - Production Ready!
+> **Status:** Active development. The application is runnable locally, but
+> production deployment and external provider integrations require explicit
+> configuration and operational validation.
 
-**Status:** ✅ Production Ready | **Version:** 1.0.0 | **Date:** July 6, 2026
+## Contents
 
-- ✅ 7 MCP servers with 59 tools (filesystem, GitHub, Git, Docker, PostgreSQL, documentation, browser)
-- ✅ 70+ validated API endpoints
-- ✅ 13-layer security architecture
-- ✅ One-command production deployment
-- ✅ Comprehensive testing suite
-- ✅ Complete documentation (8,150+ lines)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Security](docs/SECURITY.md)
+- [Engineering audit](docs/ENGINEERING_AUDIT.md)
+- [Requirements](#requirements)
+- [Local setup](#local-setup)
+- [Testing](#testing)
+- [Configuration](#configuration)
+- [Known limitations](#known-limitations)
 
-**Quick Start:** `./scripts/deploy.sh`
+## Implemented surface
 
-See [PHASE_7_COMPLETE.md](PHASE_7_COMPLETE.md) for full details.
+| Area | Status | Entry points |
+| --- | --- | --- |
+| Landing, login, registration, workspace UI | Implemented | `frontend/src/pages`, `frontend/src/layouts` |
+| Project CRUD and per-user access | Implemented | `backend/app/api/v1/endpoints/projects.py` |
+| Repository file browsing | Implemented | `backend/app/api/v1/endpoints/files.py` |
+| Repository analysis jobs | Implemented, provider-dependent | `backend/app/api/v1/endpoints/analysis.py` |
+| AI chat and provider routing | Implemented, provider-dependent | `backend/app/services/llm`, `backend/app/core/ai` |
+| GitHub cloning | Implemented for GitHub URLs | `backend/app/api/v1/endpoints/github.py` |
+| Arbitrary terminal execution | Disabled by default | `backend/app/api/v1/endpoints/terminal.py` |
+| Docker/Celery/Qdrant deployment | Configuration exists; verify before use | `docker-compose*.yml` |
 
-## 📁 Repository Directory Structure
+## Architecture
 
-```
-agentforge/
-├── index.html                    # Interactive Landing Page
-├── frontend/
-│   ├── pages/
-│   │   ├── login.html
-│   │   ├── register.html
-│   │   ├── forgot-password.html
-│   │   ├── dashboard.html
-│   │   ├── repo-analysis.html
-│   │   ├── ai-chat.html
-│   │   ├── code-explanation.html
-│   │   ├── bug-detection.html
-│   │   ├── test-generator.html
-│   │   ├── docs-generator.html
-│   │   ├── architecture.html
-│   │   ├── pr-review.html
-│   │   ├── security-scanner.html
-│   │   ├── performance.html
-│   │   └── settings.html
-│   └── assets/
-│       ├── css/
-│       │   ├── variables.css      # Core tokens
-│       │   ├── base.css           # Resets & typography
-│       │   ├── animations.css     # Keyframes and reveals
-│       │   ├── components.css     # Glass components library
-│       │   ├── layout.css         # Sidebar grids
-│       │   ├── landing.css        # Hero and visual panels
-│       │   ├── auth.css           # Floating orb layouts
-│       │   ├── chat.css           # Chat bubbles layout
-│       │   └── pages.css          # Scanner components styling
-│       └── js/
-│           ├── utils.js           # Shared utilities
-│           ├── particles.js       # Background Canvas networks
-│           ├── landing.js         # Landing counters & carousels
-│           ├── auth.js            # Validation & strength meters
-│           ├── sidebar.js         # Navigation layouts
-│           ├── charts.js          # Dark Chart.js templates
-│           ├── dashboard.js       # Dashboard analytics
-│           ├── repo-analysis.js   # Analysis simulation
-│           ├── chat.js            # Interactive bubble stream
-│           ├── code-tools.js      # Explanation & test generator
-│           ├── docs-generator.js  # Markdown exporter
-│           ├── architecture.js    # Relational SVGs plotter
-│           ├── security.js        # Security audit checklist
-│           ├── performance.js     # Code optimizations comparisons
-│           └── agents.js          # Sequential Multi-Agent orchestration
-└── backend/
-    ├── api/
-    │   └── endpoints.js           # API route payload specs
-    ├── models/
-    │   └── ai-provider.js         # Modular LLM drivers mapping
-    └── database/
-        └── schema.js              # SQLite/SQL relational tables model
+```mermaid
+flowchart LR
+  Browser[React/Vite browser] -->|HTTP/WebSocket| API[FastAPI API]
+  API --> Auth[JWT auth]
+  API --> DB[(SQLite or PostgreSQL)]
+  API --> Projects[Project and repository services]
+  API --> AI[AI orchestrator and providers]
+  Projects --> Workspace[Workspace root]
+  AI --> Providers[OpenAI / Anthropic / Gemini / Groq / Ollama]
 ```
 
-## 🚀 Quick Start Guide
+## Requirements
 
-### Production Deployment (Recommended)
+- Python 3.11+ (the checked-in code is exercised with the repository virtual
+  environment when available)
+- Node.js and npm
+- Git for repository operations
+- Optional: Ollama or a configured remote AI provider
 
-Deploy AgentForge to production with Docker Compose:
+## Local setup
 
-```bash
-# 1. Configure environment
-cp .env.production.example .env.production
-nano .env.production  # Set your API keys and passwords
+### Windows PowerShell
 
-# 2. Deploy (automated)
-chmod +x scripts/deploy.sh
-./scripts/deploy.sh
-
-# 3. Verify deployment
-./scripts/health_check.sh
+```powershell
+cd E:\agentforge\backend
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+python -c "import secrets; print(secrets.token_urlsafe(32))"
+# Put the generated value in SECRET_KEY when ENVIRONMENT is not development.
+python -m uvicorn app.main:app --reload
 ```
 
-**Access:**
-- Frontend: http://localhost
-- Workspace: http://localhost/workspace.html
-- API: http://localhost/api
-- API Docs: http://localhost/api/v1/docs
+In another terminal:
 
-### Development Mode
-
-For local development:
-
-```bash
-# Frontend
-cd frontend
-# Open index.html or workspace.html in browser
-
-# Backend
-cd backend
-python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+```powershell
+cd E:\agentforge\frontend
+npm ci
+npm run dev
 ```
 
-## 📚 Documentation
+Open `http://localhost:3000`. The API and Swagger UI are available at
+`http://localhost:8000/health` and `http://localhost:8000/docs`.
 
-### Quick Links
-- **[Phase 7 Complete Report](PHASE_7_COMPLETE.md)** - Production readiness overview
-- **[Deployment Guide](DEPLOYMENT.md)** - Complete deployment instructions
-- **[MCP Architecture](MCP_ARCHITECTURE.md)** - Technical MCP documentation
-- **[API Documentation](http://localhost/api/v1/docs)** - Swagger UI (when running)
+### Linux/macOS
 
-### Key Features
+Use the equivalent `python3 -m venv .venv`, activation command, and
+`npm ci`; the backend command remains `python -m uvicorn app.main:app --reload`.
 
-#### 🤖 AI Capabilities
-- Multi-provider support (OpenAI, Anthropic, Google)
-- 59 AI-accessible tools via MCP
-- Intelligent code analysis and generation
-- Repository understanding and context building
-- Automated documentation generation
+## Configuration
 
-#### 🛠️ MCP Servers (7 servers, 59 tools)
-- **Filesystem** (10 tools) - File operations with security
-- **GitHub** (8 tools) - Repository and issue management
-- **Git** (12 tools) - Version control operations
-- **Docker** (12 tools) - Container management
-- **PostgreSQL** (7 tools) - Database operations
-- **Documentation** (5 tools) - Search 15+ doc sources
-- **Browser** (5 tools) - Read-only web access
+Copy [`backend/.env.example`](backend/.env.example) to `backend/.env`.
+`SECRET_KEY` must be at least 32 characters outside development. Set
+`CORS_ORIGINS` to a comma-separated list of exact frontend origins.
+`WORKSPACE_ROOT` confines repository and file operations. Terminal execution is
+disabled unless `ENABLE_TERMINAL=true`; enabling it still permits only the
+documented command allowlist inside that root.
 
-#### 🔐 Security (13 layers)
-- JWT authentication & RBAC
-- Rate limiting (100 req/s API, 5 req/s auth)
-- SQL injection & XSS protection
-- Path traversal prevention
-- MCP approval workflow
-- Complete audit logging
+AI keys are optional for local UI/API development. Configure the key matching
+the provider selected by `DEFAULT_AI_PROVIDER`; Ollama is the default local
+provider and must be installed separately.
 
-#### 🚀 Production Infrastructure
-- Docker Compose setup (7 services)
-- Nginx reverse proxy with SSL ready
-- PostgreSQL + Redis + Qdrant
-- Celery for background tasks
-- Automated health checks
-- Database migrations
+## Testing
 
-## 🛠️ Configuration
+```powershell
+cd E:\agentforge\backend
+.\.venv\Scripts\python.exe -m pytest -q
 
-### Essential Environment Variables
-
-```bash
-# Security (REQUIRED)
-SECRET_KEY=your-32-character-secret-key
-POSTGRES_PASSWORD=your-database-password
-REDIS_PASSWORD=your-redis-password
-
-# AI Provider (at least one REQUIRED)
-OPENAI_API_KEY=sk-your-openai-key
-ANTHROPIC_API_KEY=sk-ant-your-anthropic-key
-GOOGLE_API_KEY=your-google-key
-
-# GitHub Integration (optional)
-GITHUB_TOKEN=ghp-your-github-token
-
-# Email (optional)
-SMTP_HOST=smtp.gmail.com
-SMTP_USER=your-email@gmail.com
-SMTP_PASSWORD=your-app-password
+cd E:\agentforge\frontend
+npm run build
 ```
 
-See [.env.production.example](.env.production.example) for all options.
+The commands above are the repository checks. Results depend on installed
+dependencies and local services; see the engineering audit for the latest
+verified baseline and remaining caveats.
 
-## 📊 Project Status
+## Docker
 
-### Phase 7: Integration + MCP + Production ✅ COMPLETE
-- ✅ Part 1: MCP Server Implementation
-- ✅ Part 2: Full Integration Validation
-- ✅ Part 3: MCP Integration
-- ✅ Part 4: End-to-End Testing
-- ✅ Part 5: Performance Optimization
-- ✅ Part 6: Error Recovery
-- ✅ Part 7: Production Deployment
-- ✅ Part 8: Security Audit
-- ✅ Part 9: Final Validation
+The compose files are deployment configurations, not a substitute for
+securing secrets. Set `SECRET_KEY` and `POSTGRES_PASSWORD` in the environment
+before running the stack. Do not expose Redis, Qdrant, or Flower publicly
+without network controls.
 
-**Result:** Production-ready AI Engineering Platform
+## Known limitations
 
-### Statistics
-- **Files Created:** 29 files
-- **Code Written:** 8,150+ lines
-- **MCP Tools:** 59 tools
-- **API Endpoints:** 70+
-- **Test Coverage:** Core workflows covered
-- **Security Layers:** 13
+- No hosted demo or real provider credentials are included.
+- Screenshot capture is intentionally omitted when a verified running
+  environment is unavailable.
+- The legacy `docker-compose.prod.yml` requires a separately supplied
+  `.env.production`; validate it before deployment.
+- No license has been added; the project owner must choose and add one.
 
-## 🎯 Architecture
+## Contributing
 
-```
-User → Nginx → Backend → AI Orchestrator → Tool Engine → MCP Manager 
-→ MCP Client → MCP Server → Tool Execution → Response
-```
-
-**Services:**
-- Frontend (Static files)
-- Backend (FastAPI x4 workers)
-- PostgreSQL (Database)
-- Redis (Cache & tasks)
-- Qdrant (Vector database)
-- Celery Worker (Background jobs)
-- Celery Beat (Scheduled tasks)
-- Nginx (Reverse proxy)
-
-## 🔧 Maintenance
-
-```bash
-# View logs
-docker-compose -f docker-compose.prod.yml logs -f
-
-# Restart services
-docker-compose -f docker-compose.prod.yml restart
-
-# Update application
-git pull
-docker-compose -f docker-compose.prod.yml up -d --build
-
-# Backup database
-docker-compose -f docker-compose.prod.yml exec postgres \
-  pg_dump -U agentforge agentforge > backup.sql
-
-# Scale workers
-docker-compose -f docker-compose.prod.yml up -d --scale celery_worker=8
-```
-
-## 🧪 Testing
-
-```bash
-# Run E2E tests
-pytest backend/tests/test_e2e_integration.py -v
-
-# Validate API integration
-python backend/scripts/validate_integration.py
-
-# Health check
-./scripts/health_check.sh
-```
-
-## 📞 Support
-
-- **Documentation:** See [PHASE_7_COMPLETE.md](PHASE_7_COMPLETE.md)
-- **Deployment Issues:** See [DEPLOYMENT.md](DEPLOYMENT.md)
-- **API Reference:** http://localhost/api/v1/docs
-- **Architecture:** See [MCP_ARCHITECTURE.md](MCP_ARCHITECTURE.md)
-
-## 🎯 Next Steps
-
-Phase 7 is complete and AgentForge is production-ready. **Awaiting approval for Phase 8.**
+Make focused changes, add regression tests for behavior changes, run the
+backend and frontend checks, and update the documentation when routes or
+configuration change. Never commit `.env` files, tokens, local databases, or
+generated artifacts.

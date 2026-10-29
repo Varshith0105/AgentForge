@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -60,7 +60,7 @@ def cancel_job(
     if job.status in ("completed", "failed"):
         raise HTTPException(status_code=400, detail=f"Cannot cancel a {job.status} job")
     job.status = "cancelled"
-    job.completed_at = datetime.utcnow()
+    job.completed_at = datetime.now(timezone.utc)
     db.commit()
     return {"message": "Job cancelled", "job_id": job_id}
 

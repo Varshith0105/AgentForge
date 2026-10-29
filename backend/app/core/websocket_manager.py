@@ -1,7 +1,7 @@
 import asyncio
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Optional, Set
 from fastapi import WebSocket, WebSocketDisconnect
 
@@ -30,7 +30,7 @@ class WebSocketManager:
             for channel, sockets in self._connections.items():
                 for ws in list(sockets):
                     try:
-                        await ws.send_json({"type": "heartbeat", "ts": datetime.utcnow().isoformat()})
+                        await ws.send_json({"type": "heartbeat", "ts": datetime.now(timezone.utc).isoformat()})
                     except Exception:
                         dead.append((channel, ws))
             for channel, ws in dead:
@@ -49,7 +49,7 @@ class WebSocketManager:
             "type": "connected",
             "channel": channel,
             "user": user_email,
-            "ts": datetime.utcnow().isoformat(),
+            "ts": datetime.now(timezone.utc).isoformat(),
         })
 
     async def disconnect(self, websocket: WebSocket, channel: str):
